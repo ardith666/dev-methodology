@@ -80,21 +80,115 @@ Each phase requires user approval. No skipping ahead (without a warning).
 
 ## Installation
 
-### For OpenClaw
-
-Copy `SKILL.md` to your workspace skills directory:
+### 🦜 OpenClaw
 
 ```bash
 cp SKILL.md ~/.openclaw/workspace/skills/dev-methodology/
 ```
 
-### For Claude Code
+Or via ClawHub (coming soon):
+```bash
+clawhub install dev-methodology
+```
 
-Place `SKILL.md` as `CLAUDE.md` in your project root, or add to your existing instructions.
+### 🤖 Claude Code
 
-### As a Reference
+**Option A:** Project root
+```bash
+curl -o CLAUDE.md https://raw.githubusercontent.com/ardith666/dev-methodology/main/SKILL.md
+```
 
-Read `SKILL.md` and apply the principles to any AI coding workflow.
+**Option B:** Append to existing CLAUDE.md
+```bash
+echo "" >> CLAUDE.md
+curl https://raw.githubusercontent.com/ardith666/dev-methodology/main/SKILL.md >> CLAUDE.md
+```
+
+**Option C:** Claude Code Plugin
+```bash
+/plugin install dev-methodology@ardith666/dev-methodology
+```
+
+### 🔥 Hermes
+
+Add to your Hermes project config or paste into system prompt:
+```bash
+curl -o .hermes/skills/dev-methodology.md https://raw.githubusercontent.com/ardith666/dev-methodology/main/SKILL.md
+```
+
+Or reference in your Hermes config:
+```json
+{
+  "skills": [".hermes/skills/dev-methodology.md"]
+}
+```
+
+### 🐍 OpenCode
+
+Place as project-level instruction:
+```bash
+cp SKILL.md .opencode/instructions.md
+```
+
+Or add to global config:
+```bash
+cp SKILL.md ~/.opencode/instructions.md
+```
+
+### 🤗 Pi Agent
+
+Add to your Pi workspace:
+```bash
+cp SKILL.md ~/.pi/skills/dev-methodology.md
+```
+
+### 💻 Cursor
+
+Create project rule:
+```bash
+mkdir -p .cursor/rules
+cp SKILL.md .cursor/rules/dev-methodology.mdc
+```
+
+### 🐙 GitHub Copilot
+
+Add to `.github/copilot-instructions.md`:
+```bash
+mkdir -p .github
+cp SKILL.md .github/copilot-instructions.md
+```
+
+### 🏭 Factory Droid
+```bash
+droid plugin install https://github.com/ardith666/dev-methodology
+```
+
+### 🧩 Kimi Code
+```
+/plugins
+→ Search: dev-methodology
+→ Install
+```
+
+### 🔧 Codex (OpenAI)
+
+**Codex App:** Plugins → Search "dev-methodology" → Install
+
+**Codex CLI:**
+```bash
+/plugins
+→ Search: dev-methodology
+→ Install Plugin
+```
+
+### 📝 Any Other AI Tool
+
+Copy `SKILL.md` content into:
+- System prompt / custom instructions
+- Project-level `AGENTS.md` / `CLAUDE.md` / `.cursorrules` / similar
+- Any file the AI tool reads as context on startup
+
+The methodology is framework-agnostic — the principles work with any AI coding agent.
 
 ## Usage
 

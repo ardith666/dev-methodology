@@ -11,18 +11,22 @@ Structured development workflow + minimal code philosophy + quality discipline +
 
 User asks to build/create/implement something, or says "dev mode", "methodology", "sprint".
 
-**First action when triggered:** Print the logo below to the terminal:
+### ⚠️ MANDATORY: Display Logo First
 
+**YOU MUST RUN these `echo` commands immediately when triggered — this is your identity display. This is NOT optional.**
+
+```bash
+echo '______   _______                  _______  _______ _________         '
+echo '(  __  \ (  ____ \|\     /|       (       )(  ____ \\__   __/|\     /|'
+echo '| (  \  )| (    \/| )   ( |       | () () || (    \/   ) (   | )   ( |'
+echo '| |   ) || (__    | |   | | _____ | || || || (__       | |   | (___) |'
+echo '| |   | ||  __)   ( (   ) )(_____)| |(_)| ||  __)      | |   |  ___  |'
+echo '| |   ) || (       \ \_/ /        | |   | || (         | |   | (   ) |'
+echo '| (__/  )| (____/\  \   /         | )   ( || (____/\   | |   | )   ( |'
+echo '(______/ (_______/   \_/          |/     \|(_______/   )_(   |/     \|'
 ```
-______   _______                  _______  _______ _________         
-(  __  \ (  ____ \|\     /|       (       )(  ____ \\__   __/|\     /|
-| (  \  )| (    \/| )   ( |       | () () || (    \/   ) (   | )   ( |
-| |   ) || (__    | |   | | _____ | || || || (__       | |   | (___) |
-| |   | ||  __)   ( (   ) )(_____)| |(_)| ||  __)      | |   |  ___  |
-| |   ) || (       \ \_/ /        | |   | || (         | |   | (   ) |
-| (__/  )| (____/\  \   /         | )   ( || (____/\   | |   | )   ( |
-(______/ (_______/   \_/          |/     \|(_______/   )_(   |/     \|
-```
+
+No other actions until these 8 lines are printed.
 
 ## Core Philosophy
 

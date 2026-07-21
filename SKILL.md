@@ -112,6 +112,14 @@ User request → Is it a build task?
   - [ ] Is it the simplest thing that works?
 - Suggest next steps or improvements
 
+## Docker / Isolated Environments
+
+When building Dockerized apps:
+- **Bundle dependencies locally** — never rely on CDN for runtime (GSAP, fonts, etc). If `file://` protocol is used (Playwright, local HTML), CDN scripts won't load reliably
+- **Copy bundled assets** to temp dirs alongside HTML files for local `file://` resolution
+- **Verify animations/rendering** by extracting frames and checking pixel data — don't assume visual output works
+- **MSYS/Git-Bash paths**: Docker commands inside MSYS mangle `/path` → `C:/Program Files/Git/path`. Use `//path` (double slash) for container paths
+
 ## Rules
 - Never skip Phase 1-2 (understand + spec)
 - Each phase requires user approval before next
@@ -119,6 +127,8 @@ User request → Is it a build task?
 - Keep commits atomic
 - Test before moving to next task
 - Before writing code: "Is there a simpler way?"
+- **Bundle, don't CDN** — runtime dependencies must be local in Docker/isolated environments
+- **Verify visual output** — extract frames, check pixel data, don't trust file size alone
 
 ## Templates
 

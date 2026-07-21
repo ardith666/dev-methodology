@@ -1,31 +1,10 @@
 <p align="center">
-  <pre align="center" style="font-family: monospace; font-size: 10px; line-height: 1.1;">
-                                                                          
-                 ██████╗ ███████╗██╗   ██╗███████╗███████╗███████╗        
-                ██╔════╝ ██╔════╝██║   ██║██╔════╝██╔════╝██╔════╝        
-                ██║  ███╗█████╗  ██║   ██║█████╗  █████╗  ███████╗        
-                ██║   ██║██╔══╝  ╚██╗ ██╔╝██╔══╝  ██╔══╝  ╚════██║        
-                ╚██████╔╝███████╗ ╚████╔╝ ██║     ███████╗███████║        
-                 ╚═════╝ ╚══════╝  ╚═══╝  ╚═╝     ╚══════╝╚══════╝        
-                                                                          
-                 ███╗   ███╗ █████╗ ███████╗████████╗███████╗██████╗ ███╗ ███╗
-                 ████╗ ████║██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗████╗████║
-                 ██╔████╔██║███████║███████╗   ██║   █████╗  ██████╔╝██╔████╔██║
-                 ██║╚██╔╝██║██╔══██║╚════██║   ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║
-                 ██║ ╚═╝ ██║██║  ██║███████║   ██║   ███████╗██║  ██║██║ ╚═╝ ██║
-                 ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝
-                                                                          
-                     ╔═══════════════════════════════════════════╗        
-                     ║  STRUCTURED WORKFLOW + MINIMAL CODE       ║        
-                     ║  + PERSISTENT KNOWLEDGE                   ║        
-                     ║                                           ║        
-                     ║  For AI coding agents that forget nothing.║        
-                     ╚═══════════════════════════════════════════╝        
-                                                                          
-                          ⚡ ask → spec → plan → implement ⚡             
-                          ⚡ → test → review → knowledge   ⚡             
-                                                                          
-  </pre>
+  <img src="media/logo.svg" alt="Dev Methodology" width="320">
+</p>
+
+<p align="center" style="margin-top: -20px;">
+  <b>Structured workflow + minimal code + persistent knowledge</b><br>
+  <i>For AI coding agents that forget nothing.</i>
 </p>
 
 <p align="center">

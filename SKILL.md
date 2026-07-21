@@ -1,11 +1,11 @@
 ---
 name: dev-methodology
-description: "Structured software development workflow: ask → spec → plan → implement → test → review. Use when building, creating, or implementing something."
+description: "Structured software development workflow: ask → spec → plan → implement → test → review → knowledge. Use when building, creating, or implementing something."
 ---
 
 # Dev Methodology
 
-Structured development workflow + minimal code philosophy + quality discipline. Inspired by Superpowers, Ponytail, and Anthropic Agent Skills.
+Structured development workflow + minimal code philosophy + quality discipline + persistent knowledge. Inspired by Superpowers, Ponytail, and Anthropic Agent Skills.
 
 ## Trigger
 
@@ -48,6 +48,35 @@ Anti-patterns to catch:
 - If 200 lines could be 50, rewrite it
 - The test: Would a senior engineer say this is overcomplicated? If yes, simplify.
 
+## Knowledge Capture
+
+Every project has a `knowledge/KNOWLEDGE.md` file. This is the **single source of truth** for project context. It solves the problem of agents losing context between sessions, which causes wasted tokens and hallucinations.
+
+### How It Works
+
+1. **Create** `knowledge/KNOWLEDGE.md` at project start (Phase 1)
+2. **Update** at every phase gate — append, never delete
+3. **Read first** when starting a new session on this project
+
+### What to Capture
+
+| Section | When Updated | What It Tracks |
+|---------|-------------|----------------|
+| Vision | Phase 1 | The big idea, goals, why this exists |
+| Architecture | Phase 2 | Tech stack, structure, key patterns |
+| Decisions | Phase 2+ | What was chosen and why (with alternatives rejected) |
+| Progress | Phase 4+ | Checklist of done/blocked/todo |
+| Learnings | Phase 4+ | Pitfalls, discoveries, what worked/didn't |
+| Files | Phase 4+ | What was touched and why |
+| Next | Phase 6 | What comes next, known issues, debt |
+
+### Rules
+
+- **Append only** — never rewrite or delete existing entries
+- **Timestamp** — every entry gets a date prefix `[YYYY-MM-DD]`
+- **Be specific** — "Used SQLite for simplicity, no server needed" not "Chose database"
+- **Read on start** — first action in any session: read `knowledge/KNOWLEDGE.md`
+
 ## Decision Tree
 
 ```
@@ -67,12 +96,14 @@ User request → Is it a build task?
 - Identify: what problem, who uses it, constraints, success criteria
 - Confirm understanding back to user
 - **Gate:** User approves understanding before proceeding
+- **Knowledge:** Create `knowledge/KNOWLEDGE.md` with Vision section
 
 ### Phase 2: Spec
 - Write minimal spec using template below
 - Show in digestible chunks (not walls of text)
 - Get explicit approval before proceeding
 - **Gate:** User approves spec before proceeding
+- **Knowledge:** Add Architecture + Decisions sections
 
 ### Phase 3: Plan
 - Break into small tasks (~15-30 min each)
@@ -81,6 +112,7 @@ User request → Is it a build task?
 - Present as numbered checklist
 - For each task: note existing solutions to check first
 - **Gate:** User approves plan before proceeding
+- **Knowledge:** Add Progress checklist (all unchecked)
 
 ### Phase 4: Implement (Ponytail Mode)
 - Work through tasks in order
@@ -92,12 +124,14 @@ User request → Is it a build task?
   4. Commit (atomic: one logical change)
 - Prefer: native APIs > stdlib > existing packages > custom code
 - Use subagents for parallel independent tasks
+- **Knowledge:** Update Progress (check done items), add Learnings + Files as they emerge
 
 ### Phase 5: Test
 - Run all tests
 - Manual smoke test if applicable
 - Report pass/fail per task
 - Verify against spec requirements
+- **Knowledge:** Update Progress with test results
 
 ### Phase 6: Review + Self-Critique
 - Summarize what was built
@@ -111,6 +145,7 @@ User request → Is it a build task?
   - [ ] Does it solve actual problem (not imagined)?
   - [ ] Is it the simplest thing that works?
 - Suggest next steps or improvements
+- **Knowledge:** Add Next section with follow-ups and known issues
 
 ## Rules
 - Never skip Phase 1-2 (understand + spec)
@@ -119,8 +154,46 @@ User request → Is it a build task?
 - Keep commits atomic
 - Test before moving to next task
 - Before writing code: "Is there a simpler way?"
+- **Always read `knowledge/KNOWLEDGE.md` first in any new session**
+- **Always update `knowledge/KNOWLEDGE.md` at every phase gate**
 
 ## Templates
+
+### Knowledge Template
+```markdown
+# Project Knowledge
+
+## Vision
+[What are we building and why]
+
+## Architecture
+- Stack: [technologies used]
+- Structure: [key directories/files]
+- Patterns: [design patterns, conventions]
+
+## Decisions
+| Date | Decision | Reason | Rejected |
+|------|----------|--------|----------|
+| [date] | [choice] | [why] | [what else was considered] |
+
+## Progress
+- [x] [completed task]
+- [ ] [pending task]
+- [!] [blocked task — reason]
+
+## Learnings
+- [date] [what was discovered]
+
+## Files
+| File | Purpose | Last Changed |
+|------|---------|-------------|
+| [path] | [what it does] | [date] |
+
+## Next
+- [what to do next]
+- [known issues]
+- [technical debt]
+```
 
 ### Spec Template
 ```markdown

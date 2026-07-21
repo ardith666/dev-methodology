@@ -1,257 +1,296 @@
-# 🧠 Dev Methodology
+<p align="center">
+  <h1 align="center">🧠 Dev Methodology</h1>
+  <p align="center">
+    <b>Structured workflow + minimal code + persistent knowledge</b><br>
+    <i>For AI coding agents that forget nothing.</i>
+  </p>
+</p>
 
-> A structured software development workflow for AI coding agents — combining the best patterns from four proven frameworks into one cohesive methodology, with persistent knowledge that follows your project.
+<p align="center">
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#the-workflow">Workflow</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#knowledge-portability">Knowledge</a>
+</p>
+
+---
 
 ## Why This Exists
 
-AI coding agents are powerful but prone to specific failure modes:
-- **Over-engineering** — building abstractions nobody asked for
-- **Silent assumptions** — picking interpretations without asking
-- **Scope creep** — refactoring adjacent code during unrelated changes
-- **Skipping understanding** — jumping straight to code
-- **Context loss** — agents forget everything between sessions, wasting tokens and hallucinating
+AI coding agents are powerful but make predictable mistakes:
 
-Dev Methodology addresses all five with a single, battle-tested workflow.
+```
+ ❌ Over-engineering      → building abstractions nobody asked for
+ ❌ Silent assumptions    → picking interpretations without asking
+ ❌ Scope creep           → refactoring adjacent code during changes
+ ❌ Skipping understanding→ jumping straight to code
+ ❌ Context loss          → forgetting everything between sessions
+```
 
-## What It Combines
+**Dev Methodology** fixes all five — with one workflow.
 
-| Source | What We Took | Why |
-|--------|-------------|-----|
-| [**Superpowers**](https://github.com/obra/superpowers) | Phase-gated workflow (ask → spec → plan → implement → test → review) | Prevents building the wrong thing. Each phase requires user approval before proceeding. |
-| [**Ponytail**](https://github.com/DietrichGebert/ponytail) | Minimal code philosophy ("best code is code you never wrote") | Reduces code volume ~54%, cost ~20%, while staying 100% safe. |
-| [**Anthropic Agent Skills**](https://github.com/anthropics/skills) | Decision trees, self-critique checklists, progressive disclosure | Structured branching logic instead of linear instructions. Quality gates at every phase. |
-| [**Karpathy Guidelines**](https://github.com/multica-ai/andrej-karpathy-skills) | Surgical changes — touch only what you must | Prevents orthogonal edits, drive-by refactoring, and unintended side effects. |
-| **Knowledge Capture** | Persistent project context via `knowledge/KNOWLEDGE.md` | Eliminates context loss between sessions — no more wasted tokens or hallucinations from re-learning. |
+---
 
-## Why Combine Instead of Pick One?
+## The DNA
 
-Each framework solves a **different** problem:
+Five sources, five problems solved:
 
-- **Superpowers** tells you **when** to do things (workflow order)
-- **Ponytail** tells you **how much** to build (as little as possible)
-- **Anthropic Skills** tells you **how to structure** instructions (decision trees + quality gates)
-- **Karpathy** tells you **where** to touch (only what's needed, nothing else)
-- **Knowledge Capture** tells you **what happened** (persistent context across sessions)
+```
+ ┌─────────────────────────────────────────────────────────────────┐
+ │                        DEV METHODOLOGY                         │
+ ├──────────────┬──────────────┬──────────────┬────────────────────┤
+ │ SUPERPOWERS  │  PONYTAIL    │  ANTHROPIC   │     KARPATHY      │
+ │              │              │   SKILLS     │                    │
+ │  🕐 WHEN     │  📏 HOW MUCH │  🏗️ HOW      │  🔪 WHERE          │
+ │              │              │              │                    │
+ │  Workflow    │  Minimal     │  Decision    │  Surgical          │
+ │  order       │  code        │  trees +     │  changes —         │
+ │  (gates at  │  philosophy  │  checklists  │  touch only        │
+ │  every phase)│              │              │  what's needed     │
+ └──────────────┴──────────────┴──────────────┴────────────────────┘
+                                    +
+                        ┌───────────────────┐
+                        │  📚 KNOWLEDGE     │
+                        │                   │
+                        │  Persistent       │
+                        │  project context  │
+                        │  across sessions  │
+                        └───────────────────┘
+```
 
-Together they form a complete system. Alone, each has blind spots.
-
-## Knowledge Portability
-
-The `knowledge/KNOWLEDGE.md` file is **plain markdown** — you own the data. Transfer it anywhere:
-
-| Destination | How |
-|-------------|-----|
-| **Obsidian** | Copy `knowledge/` folder into your vault. Wikilinks and backlinks work instantly. |
-| **Notion** | Import `KNOWLEDGE.md` as a page. Markdown tables and checklists render natively. |
-| **GitHub** | Commit `knowledge/` with your code. GitHub renders markdown in the repo. |
-| **GitBook / Docusaurus** | Add `knowledge/` to your docs folder. Structure is already compatible. |
-| **Any text editor** | It's just markdown. Open it anywhere. |
-
-No vendor lock-in. No export scripts. Your project knowledge stays portable and human-readable.
+---
 
 ## The Workflow
 
 ```
-Understand → Spec → Plan → Implement → Test → Review → Knowledge
-     ↑          ↑       ↑        ↑          ↑       ↑        ↑
-   Gate       Gate    Gate    Ponytail   Verify   Self-Critique  Capture
+  ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+  │          │    │          │    │          │    │          │    │          │    │          │    │          │
+  │ 1.UNDER- │───▶│ 2.SPEC   │───▶│ 3.PLAN   │───▶│ 4.IMPLE- │───▶│ 5.TEST   │───▶│ 6.REVIEW │───▶│ 7.KNOW-  │
+  │  STAND   │    │          │    │          │    │  MENT    │    │          │    │          │    │  LEDGE   │
+  │          │    │          │    │          │    │          │    │          │    │          │    │          │
+  └────┬─────┘    └────┬─────┘    └────┬─────┘    └────┬─────┘    └────┬─────┘    └────┬─────┘    └────┬─────┘
+       │               │               │               │               │               │               │
+       ▼               ▼               ▼               ▼               ▼               ▼               ▼
+  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐
+  │  GATE:  │    │  GATE:  │    │  GATE:  │    │PONYTAIL │    │VERIFY   │    │  SELF-  │    │ CAPTURE │
+  │ approve │    │ approve │    │ approve │    │ minimal │    │ all     │    │ CRITIQUE│    │ context │
+  │ before  │    │ before  │    │ before  │    │ code +  │    │ tests   │    │ + low   │    │ to file │
+  │ next    │    │ next    │    │ next    │    │ commit  │    │ pass    │    │ LOC     │    │         │
+  └─────────┘    └─────────┘    └─────────┘    └─────────┘    └─────────┘    └─────────┘    └─────────┘
+       │               │               │               │               │               │               │
+       ▼               ▼               ▼               ▼               ▼               ▼               ▼
+   📚 Vision      📚 Arch +      📚 Progress    📚 Progress    📚 Progress    📚 Next        ✅ Done
+                   Decisions      (unchecked)    (check done)   (results)      (follow-ups)
 ```
 
-Every phase gate auto-updates `knowledge/KNOWLEDGE.md` — the single source of truth for project context. New sessions read this file first, eliminating context loss and hallucination.
+> Every phase auto-updates `knowledge/KNOWLEDGE.md`. New sessions read it first → **zero context loss**.
 
-### Phase 1: Understand
-Ask clarifying questions BEFORE writing any code. Never assume.
-**Knowledge:** Create `knowledge/KNOWLEDGE.md` with Vision section.
+---
 
-### Phase 2: Spec
-Write minimal spec. Show in digestible chunks. Get explicit approval.
-**Knowledge:** Add Architecture + Decisions sections.
+## Quick Start
 
-### Phase 3: Plan
-Break into small tasks. Mark dependencies. Identify test cases.
-**Knowledge:** Add Progress checklist (all unchecked).
+```bash
+# Clone the skill
+git clone https://github.com/ardith666/dev-methodology.git
 
-### Phase 4: Implement (Ponytail Mode)
-Check existing solutions → Implement minimal → Test → Commit. One logical change per commit.
-**Knowledge:** Update Progress, add Learnings + Files as they emerge.
+# Copy to your project
+cp dev-methodology/SKILL.md your-project/
 
-### Phase 5: Test
-Run all tests. Report pass/fail per task.
-**Knowledge:** Update Progress with test results.
+# Or install globally (OpenCode)
+cp dev-methodology/SKILL.md ~/.agents/skills/dev-methodology/SKILL.md
+```
 
-### Phase 6: Review + Self-Critique
-Celebrate low LOC. Run quality checklist. Suggest improvements.
-**Knowledge:** Add Next section with follow-ups and known issues.
+Then just say: **"dev mode"** or ask to build something.
 
-## Knowledge Capture
+---
 
-Every project gets a `knowledge/KNOWLEDGE.md` file — append-only, timestamped, single source of truth.
+## Knowledge Portability
 
-**The problem it solves:** Agents lose context between sessions. Without persistent knowledge, each session starts from zero — wasting tokens re-learning the codebase and hallucinating from incomplete understanding.
+Your `knowledge/KNOWLEDGE.md` is **plain markdown** — own the data, export anywhere:
 
-**How it works:**
-- Created at Phase 1 (Understand)
-- Updated at every phase gate (append only, never delete)
-- Read first when starting any new session on this project
+```
+ knowledge/
+ ├── knowledge/KNOWLEDGE.md  ← single source of truth
+ │
+ ├──▶ Obsidian    → copy folder into vault (wikilinks work instantly)
+ ├──▶ Notion      → import as page (tables + checklists render natively)
+ ├──▶ GitHub      → commit with code (renders in repo)
+ ├──▶ GitBook     → add to docs folder (structure compatible)
+ └──▶ Any editor  → it's just markdown
+```
 
-**What it tracks:**
-- Vision — what we're building and why
-- Architecture — tech stack, structure, patterns
-- Decisions — what was chosen and why (with rejected alternatives)
-- Progress — done/blocked/todo checklist
-- Learnings — pitfalls, discoveries, what worked
-- Files — what was touched and why
-- Next — follow-ups, known issues, debt
+**No vendor lock-in. No export scripts.**
 
-## Three Core Principles
+---
+
+## What Each Phase Does
+
+### Phase 1: Understand 🤔
+```
+ Ask questions → Identify problem → Confirm with user
+ └─ 📚 Create knowledge/KNOWLEDGE.md with Vision section
+```
+
+### Phase 2: Spec 📝
+```
+ Write minimal spec → Show in chunks → Get approval
+ └─ 📚 Add Architecture + Decisions sections
+```
+
+### Phase 3: Plan 📋
+```
+ Break into tasks → Mark dependencies → Identify test cases
+ └─ 📚 Add Progress checklist (all unchecked)
+```
+
+### Phase 4: Implement ⚡
+```
+ Check existing → Implement minimal → Test → Commit
+ └─ 📚 Update Progress, add Learnings + Files
+```
+
+### Phase 5: Test ✅
+```
+ Run all tests → Manual smoke test → Report pass/fail
+ └─ 📚 Update Progress with test results
+```
+
+### Phase 6: Review 🎯
+```
+ Summarize → Count LOC → Self-critique checklist
+ └─ 📚 Add Next section with follow-ups
+```
+
+---
+
+## Core Principles
 
 ### 🎯 Minimal Code (Ponytail)
-Before writing ANY code:
-1. Does this need to exist at all?
-2. Does a library/tool already solve this?
-3. Does the platform have it natively?
-4. Can it be one line?
-5. **Only then write code.**
+```
+ Before writing ANY code:
+   1. Does this need to exist at all?
+   2. Does a library/tool already solve this?
+   3. Does the platform have it natively?
+   4. Can it be one line?
+   5. Only then write code.
+```
 
 ### 🔪 Surgical Changes (Karpathy)
-When editing existing code:
-- Don't "improve" adjacent code
-- Don't refactor things that aren't broken
-- Match existing style
-- Every changed line traces to user's request
+```
+ When editing existing code:
+   ✗ Don't "improve" adjacent code
+   ✗ Don't refactor things that aren't broken
+   ✓ Match existing style
+   ✓ Every changed line traces to user's request
+```
 
 ### 🚦 Phase Gates (Superpowers)
-Each phase requires user approval. No skipping ahead (without a warning).
+```
+ Each phase requires user approval.
+ No skipping ahead (without a warning).
+```
+
+---
 
 ## Installation
 
-### 🦜 OpenClaw
+<details>
+<summary><b>Claude Code</b></summary>
 
 ```bash
-cp SKILL.md ~/.openclaw/workspace/skills/dev-methodology/
-```
-
-Or via ClawHub (coming soon):
-```bash
-clawhub install dev-methodology
-```
-
-### 🤖 Claude Code
-
-**Option A:** Project root
-```bash
+# Option A: Project root
 curl -o CLAUDE.md https://raw.githubusercontent.com/ardith666/dev-methodology/main/SKILL.md
-```
 
-**Option B:** Append to existing CLAUDE.md
-```bash
+# Option B: Append to existing
 echo "" >> CLAUDE.md
 curl https://raw.githubusercontent.com/ardith666/dev-methodology/main/SKILL.md >> CLAUDE.md
-```
 
-**Option C:** Claude Code Plugin
-```bash
+# Option C: Plugin
 /plugin install dev-methodology@ardith666/dev-methodology
 ```
+</details>
 
-### 🔥 Hermes
+<details>
+<summary><b>OpenCode</b></summary>
 
-Add to your Hermes project config or paste into system prompt:
 ```bash
-curl -o .hermes/skills/dev-methodology.md https://raw.githubusercontent.com/ardith666/dev-methodology/main/SKILL.md
-```
-
-Or reference in your Hermes config:
-```json
-{
-  "skills": [".hermes/skills/dev-methodology.md"]
-}
-```
-
-### 🐍 OpenCode
-
-Place as project-level instruction:
-```bash
+# Project-level
 cp SKILL.md .opencode/instructions.md
+
+# Global
+cp SKILL.md ~/.agents/skills/dev-methodology/SKILL.md
 ```
+</details>
 
-Or add to global config:
-```bash
-cp SKILL.md ~/.opencode/instructions.md
-```
+<details>
+<summary><b>Cursor</b></summary>
 
-### 🤗 Pi Agent
-
-Add to your Pi workspace:
-```bash
-cp SKILL.md ~/.pi/skills/dev-methodology.md
-```
-
-### 💻 Cursor
-
-Create project rule:
 ```bash
 mkdir -p .cursor/rules
 cp SKILL.md .cursor/rules/dev-methodology.mdc
 ```
+</details>
 
-### 🐙 GitHub Copilot
+<details>
+<summary><b>GitHub Copilot</b></summary>
 
-Add to `.github/copilot-instructions.md`:
 ```bash
 mkdir -p .github
 cp SKILL.md .github/copilot-instructions.md
 ```
+</details>
 
-### 🏭 Factory Droid
+<details>
+<summary><b>Hermes</b></summary>
+
 ```bash
+curl -o .hermes/skills/dev-methodology.md https://raw.githubusercontent.com/ardith666/dev-methodology/main/SKILL.md
+```
+</details>
+
+<details>
+<summary><b>Pi Agent</b></summary>
+
+```bash
+cp SKILL.md ~/.pi/skills/dev-methodology.md
+```
+</details>
+
+<details>
+<summary><b>Factory Droid / Kimi / Codex / Other</b></summary>
+
+```bash
+# Factory Droid
 droid plugin install https://github.com/ardith666/dev-methodology
+
+# Kimi Code
+/plugins → Search: dev-methodology → Install
+
+# Codex
+/plugins → Search: dev-methodology → Install
+
+# Any tool: copy SKILL.md to system prompt / AGENTS.md / .cursorrules
 ```
+</details>
 
-### 🧩 Kimi Code
-```
-/plugins
-→ Search: dev-methodology
-→ Install
-```
-
-### 🔧 Codex (OpenAI)
-
-**Codex App:** Plugins → Search "dev-methodology" → Install
-
-**Codex CLI:**
-```bash
-/plugins
-→ Search: dev-methodology
-→ Install Plugin
-```
-
-### 📝 Any Other AI Tool
-
-Copy `SKILL.md` content into:
-- System prompt / custom instructions
-- Project-level `AGENTS.md` / `CLAUDE.md` / `.cursorrules` / similar
-- Any file the AI tool reads as context on startup
-
-The methodology is framework-agnostic — the principles work with any AI coding agent.
-
-## Usage
-
-Just say:
-- "dev mode" / "methodology" / "sprint" — activates the workflow
-- Or simply ask to build/create something — the methodology triggers automatically
+---
 
 ## Quality Checklist
 
 After every implementation:
-- [ ] Uses native/existing solutions where possible
-- [ ] Is it minimum code needed?
-- [ ] Any "just in case" additions?
-- [ ] Could any part be a one-liner?
-- [ ] Does it solve actual problem (not imagined)?
-- [ ] Is it the simplest thing that works?
-- [ ] Every changed line traces to user's request?
-- [ ] Would a senior engineer say this is overcomplicated?
+
+```
+ [ ] Uses native/existing solutions where possible
+ [ ] Is it minimum code needed?
+ [ ] Any "just in case" additions?
+ [ ] Could any part be a one-liner?
+ [ ] Does it solve actual problem (not imagined)?
+ [ ] Is it the simplest thing that works?
+ [ ] Every changed line traces to user's request
+ [ ] Would a senior engineer say this is overcomplicated?
+```
+
+---
 
 ## License
 

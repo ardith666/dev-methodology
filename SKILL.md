@@ -16,14 +16,9 @@ User asks to build/create/implement something, or says "dev mode", "methodology"
 **YOU MUST RUN these `echo` commands immediately when triggered — this is your identity display. This is NOT optional.**
 
 ```bash
-echo '______   _______                  _______  _______ _________         '
-echo '(  __  \ (  ____ \|\     /|       (       )(  ____ \\__   __/|\     /|'
-echo '| (  \  )| (    \/| )   ( |       | () () || (    \/   ) (   | )   ( |'
-echo '| |   ) || (__    | |   | | _____ | || || || (__       | |   | (___) |'
-echo '| |   | ||  __)   ( (   ) )(_____)| |(_)| ||  __)      | |   |  ___  |'
-echo '| |   ) || (       \ \_/ /        | |   | || (         | |   | (   ) |'
-echo '| (__/  )| (____/\  \   /         | )   ( || (____/\   | |   | )   ( |'
-echo '(______/ (_______/   \_/          |/     \|(_______/   )_(   |/     \|'
+echo '▖▖▄▖▖▖▖▖ ▖ ▖▄▖▄▖▖▖'
+echo '▌▌▐ ▌▌▚▘ ▛▖▞▌▙▖▐ ▙▌'
+echo '▙▌▟▖▙▌▌▌ ▌▝ ▌▙▖▐ ▌▌'
 ```
 
 No other actions until these 8 lines are printed.

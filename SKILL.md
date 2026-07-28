@@ -67,13 +67,21 @@ Anti-patterns to catch:
 
 ## Knowledge Capture
 
-Every project has a `knowledge/KNOWLEDGE.md` file. This is the **single source of truth** for project context. It solves the problem of agents losing context between sessions, which causes wasted tokens and hallucinations.
+Setiap project punya folder `knowledge/` sebagai **single source of truth**. Agent WAJIB baca entry point di `knowledge/README.md` sebelum mulai kerja.
+
+### Kenapa `knowledge/README.md`?
+
+- **Entry point universal** — agent manapun buka folder `knowledge/` → baca README → tau state
+- **Multi-agent support** — dev-meth, uiux-meth, skill lain semua output di `knowledge/`
+- **Zero tebak-tebak** — gak perlu cari file mana yang relevan
+- **Konsisten** — pattern yang sama untuk semua skill
 
 ### How It Works
 
-1. **Create** `knowledge/KNOWLEDGE.md` at project start (Phase 1)
-2. **Update** at every phase gate — append, never delete
-3. **Read first** when starting a new session on this project
+1. **Baca** `knowledge/README.md` dulu — tau metodologi aktif + file mana yang harus dibaca
+2. **Baca** file yang disebut di README (biasanya `KNOWLEDGE.md`)
+3. **Create** `knowledge/` + `knowledge/README.md` + `knowledge/KNOWLEDGE.md` di Phase 1 kalau belum ada
+4. **Update** di setiap phase gate — append, never delete
 
 ### What to Capture
 
@@ -171,8 +179,9 @@ User request → Is it a build task?
 - Keep commits atomic
 - Test before moving to next task
 - Before writing code: "Is there a simpler way?"
-- **Always read `knowledge/KNOWLEDGE.md` first in any new session**
-- **Always update `knowledge/KNOWLEDGE.md` at every phase gate**
+- **Always read `knowledge/README.md` first in any new session** — entry point
+- **If `knowledge/README.md` doesn't exist, create it based on templates**
+- **Always update `knowledge/` files at every phase gate**
 
 ## Templates
 
@@ -315,7 +324,7 @@ Setiap agent yang kerja pakai metodologi ini WAJIB baca & tulis knowledge files.
 
 | Phase | Action Knowledge |
 |-------|-----------------|
-| Phase 1 Understand | Baca knowledge dulu sebelum tanya. Skip kalau udah terjawab |
+| Phase 1 Understand | Baca `knowledge/README.md` dulu. Create `knowledge/` kalau belum ada |
 | Phase 2 Spec | Catat decision dari spec |
 | Phase 3 Plan | Catat breakdown task + dependencies |
 | Phase 4 Implement | Tulis entry setelah tiap commit |
@@ -326,7 +335,8 @@ Setiap agent yang kerja pakai metodologi ini WAJIB baca & tulis knowledge files.
 
 Agent mulai tugas "Buat JWT auth endpoint":
 
-1. Baca `knowledge/history.md` → belum ada auth work sebelumnya
+1. Baca `knowledge/README.md` → tau state + metodologi
+2. Baca `knowledge/KNOWLEDGE.md` → belum ada auth work sebelumnya
 2. Tulis decision:
 ```
 - [2026-07-21 11:00] Decision: implement JWT auth endpoint

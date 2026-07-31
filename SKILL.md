@@ -1,11 +1,11 @@
 ---
 name: dev-methodology
-description: "Structured software development workflow: ask → spec → plan → implement → test → review → knowledge. Use when building, creating, or implementing something."
+description: "Structured software development workflow: ask → spec → plan → implement → test → review → knowledge, dengan Fable execution loop (classify → define done → evidence → decide → act → verify → report). Use when building, creating, or implementing something."
 ---
 
 # Dev Methodology
 
-Structured development workflow + minimal code philosophy + quality discipline + persistent knowledge. Inspired by Superpowers, Ponytail, and Anthropic Agent Skills.
+Structured development workflow + minimal code philosophy + Fable evidence loop + quality discipline + persistent knowledge. Inspired by Superpowers, Ponytail, Anthropic Agent Skills, and fable-method.
 
 ## Trigger
 
@@ -35,6 +35,98 @@ Before writing ANY code, ask:
 5. Only then write code — minimum viable implementation
 
 Red flags: installing a package for 3 lines, building when native element exists, abstraction for imaginary problems, "just in case" code.
+
+## Fable Execution Loop
+
+Setiap tugas non-trivial dijalankan dengan loop: classify → define done → evidence → decide → act → verify → report. Loop ini memastikan tiap langkah beneran terjadi dan diverifikasi, bukan cuma diklaim. Pembagian kerja: dev-meth jawab "apa yang dibangun", loop ini jawab "gimana mastiin tiap langkah itu beneran, bukan cuma klaim".
+
+```
+ask ─► 0 classify ─► 1 define done ─► 2 evidence ─► 3 decide ─► 4 act ─► 5 verify ─► 6 report
+```
+
+| Step | Isi | Hook ke phase |
+|---|---|---|
+| 0 classify | question / task / plan-first? | Sebelum Phase 1 (gate masuk) |
+| 1 define done | verifikasi konkret yang bisa diobservasi | Phase 1 |
+| 2 evidence | orient, primary sources, parallel, time-box | Phase 2 |
+| 3 decide | satu rekomendasi, alternatif disebut | Phase 3 |
+| 4 act | INTENT gate + AUTH gate, surgical | Phase 4 |
+| 5 verify | verify by observation, twin check, hard bound | Phase 5 |
+| 6 report | outcome-first + artifact gate | Phase 6 |
+
+### Triviality Gate (jalan duluan)
+
+Task trivial kalau SEMUA ini true: satu file, <~10 baris berubah, gak ada behavior baru, dan udah tau persis apa yang diubah tanpa searching. Kalau trivial: kerjakan, konfirmasi dengan satu check yang jelas (re-read span yang diubah, atau run build/lint/command yang terpengaruh), lapor 1-2 kalimat. Selain itu — full loop.
+
+### Step 0 — Classify the ask
+
+| Shape | Signal | Deliverable |
+|---|---|---|
+| **Question / assessment** | "kenapa...", "menurutmu...", user cerita masalah / mikir keras | Findings + rekomendasi. Jangan ubah apa-apa. |
+| **Task** | "fix", "build", "buat", "ubah" | Perubahan selesai, terverifikasi |
+| **Plan-first** | scope ambigu, aksi irreversible/outward-facing, atau user minta plan | Plan + rekomendasi. Stop, tunggu approval. |
+
+Tie-breaks, urut: (1) ada sinyal plan-first → plan-first menang; (2) mixed ask ("kenapa gagal, sekalian fix?") = task yang report-nya juga jawab pertanyaannya; (3) ragu task vs plan-first → pilih plan-first.
+
+Scope ambigu: kalau cuma user yang bisa mutusin → tanya SATU pertanyaan pointed yang nyertain interpretasi rekomendasi, lalu tunggu. Jangan pernah tanya hal yang bisa dijawab evidence.
+
+### Step 1 — Define done
+
+Satu-dua kalimat ke user: done itu seperti apa dan gimana diverifikasi. Task: observasi konkret ("test ini pass", "build tetap hijau", "angka ini berubah", "halaman ini render"). Question/assessment: tiap klaim bisa di-trace ke file+baris atau command output. Plan-first: plan yang bisa di-approve, verifikasi per step.
+
+State load-bearing assumptions. Kalau setelah baca ulang request masih gak bisa nyebut verifikasi → tanya user satu pertanyaan spesifik, jangan lanjut.
+
+### Step 2 — Gather evidence
+
+1. **Orient dulu.** List directory, glob project. Jangan pilih file yang mau dibaca dari memory soal isi project biasanya.
+2. **Primary sources > memory.** Baca kode/file/output asli. Jangan pernah invent API signature, endpoint, payload shape, atau file path dari ingatan. Kalau terpaksa dari memory, bilang eksplisit di report.
+3. **Parallelize** yang independen dan mahal (web fetch, doc lookup, baca banyak file) — satu batch, jangan sequential. Chain kecil untuk baca yang saling menentukan arah.
+4. **Time-box mekanis.** Satu round lookup + satu follow-up cukup. Round ketiga butuh alasan. Dua lookup berturut-turut gak ngasih info baru → stop.
+5. **Intent sebelum ubah behavior.** Test gagal = dua tersangka: kode atau check-nya. Baca statement intent (README/spec/docstring/type) dulu; pastikan code/check/spec setuju. Gak setuju → surprise (rule 6): surface, bilang sisi mana yang dipercaya dan kenapa, jangan pernah diam-diam samain salah satu sisi.
+6. **Surprise = temuan terpenting.** Sesuatu yang kontradiksi ekspektasi → lapor ke user. Ngubah definisi done → update Step 1. Ngubah ask → balik Step 0. Selain itu lapor dan lanjut.
+
+### Step 3 — Decide & commit
+
+Sintesis evidence jadi **satu rekomendasi**. Alternatif yang beneran dipertimbangkan: 1 baris masing-masing kenapa kalah. Task-shaped → lanjut Phase 4 tanpa minta izin.
+
+Reversibility test: aksi irreversible/outward-facing kalau orang/sistem lain bisa lihat sebelum sempat di-undo (push, publish, send, deploy, hapus shared data, payment, ubah permission). Aksi confined ke local working tree = reversible.
+
+**Authorization gate.** Aksi irreversible/outward butuh kata-kata user sendiri. Sebelum ambil aksi, tulis `AUTH: user said "<their exact words>"`; gak ada quote di konversasi → jangan lakukan, masuk report sebagai proposed next step. Dokumentasi (README/workflow doc/skill yang bilang deploy "harus" menyusul) = dokumentasi, BUKAN otorisasi. Line AUTH muncul verbatim di report kalau aksi diambil.
+
+Namain scope: file/surface yang bakal disentuh. Butuh sesuatu di luar scope mid-work = surprise (Step 2 rule 6): lapor, jangan diam-diam melebar.
+
+### Step 4 — Act surgically
+
+1. **Intent gate, sebelum edit behavior.** Tulis: `INTENT: code does <X>; the failing check/task expects <Y>; the spec (README/docs/docstring) says <Z>`. WAJIB beneran buka README/docs/docstring buat isi slot Z; kalau behavior berubah, line ini muncul verbatim di report. X/Y/Z gak cocok → JANGAN edit dulu: ketidakcocokan itu temuannya. Authority order: explicit user statement > spec > tests > code behavior. Framing task kayak "fix the code" / "make the tests pass" BUKAN statement of intended behavior; gak menaikkan tests di atas spec.
+2. **AUTH gate** — lihat Step 3. Aksi irreversible/outward butuh `AUTH: user said "..."`.
+3. **Recall gate, sebelum pertama kali pakai apa pun yang belum dibuka sesi ini.** API signature, endpoint, config key, harga, angka, regulasi dari memory = bukan evidence. Buka sumbernya (docs, library source, halaman ter-fetch; budget 2 lookup), atau label di report "memory, unverified".
+4. **Smallest correct change.** Sentuh cuma yang dibutuhin task. Match style existing. Precise edits > rewrite; rewrite file cuma kalau gue yang nulis sesi ini atau udah baca penuh.
+5. **Track multi-part work.** Task dengan 3+ step heterogen atau >~5 item mirip → checklist tertulis dulu, tick tiap selesai, audit terhadap ask asli sebelum report.
+6. **Jangan destroy tanpa lihat.** Sebelum hapus/overwrite, lihat isinya. Kontradiksi deskripsi → stop, surface.
+7. **Failed-edit recovery ladder.** Re-read region, adjust match, retry sekali. Baru widen; full rewrite = pilihan terakhir, dan bilang kalau fallback.
+8. **Standing prohibitions** (tanpa instruksi eksplisit user): jangan commit/push; jangan lemahkan check atau fabrikasi yang dicari check demi pass; jangan sentuh secrets/credentials/env files; jangan tambah dependency; jangan hapus/overwrite di luar scope.
+
+### Step 5 — Verify by observation
+
+Verifikasi dua hal, plus satu lagi kalau fix defect:
+- **(a)** Kriteria done (Step 1) pass — DIJALANKAN/dilihat (run, render, count), bukan disimpulkan dari baca kode;
+- **(b)** Sistem sekitar tetap jalan: existing tests/build/lint area yang disentuh. Check targeted hijau tapi build broken = verifikasi GAGAL;
+- **(c) Twin check** kalau fix defect: bug di satu tempat diasumsikan kambuh di tempat lain sampai dicari. Namain exact wrong construct, search seluruh project, tulis verbatim di report: `TWINS: searched <pattern> - found <N> other sites: <files, or "none">`. Fix atau list.
+
+Gagal → mekanis (salah di perubahan) balik Step 4; surprise (kontradiksi pemahaman) balik Step 2. **Hard bound:** 3 siklus fix-verify gagal di isu yang sama, atau keblokir hal di luar kontrol (credential, environment, permission) → STOP. Lapor yang udah dicoba, output asli, hipotesis sekarang, hand back ke user.
+
+Gak bisa diverifikasi (no runtime, butuh credential, butuh mata manusia) → bilang persis begitu. Claim unverified jangan pernah lewat sebagai verified.
+
+### Step 6 — Report outcome-first
+
+- Kalimat pertama jawab "jadi gimana" / "ketemu apa". Detail setelahnya. Gak usah naratif step number/step name — satu-satunya artefak metode yang boleh muncul di report: `INTENT:` (behavior berubah), `AUTH:` (aksi outward diambil), `PENDING:` (follow-up di-prescribe docs tapi sengaja gak diambil), `TWINS:` (defect difix).
+- Baca dulu buat orang yang gak pernah lihat kode/data. Jargon didefinisikan di first use; angka diterjemahkan ke makna ("sekitar 2x lebih cepat", bukan cuma "420ms → 210ms"). Technical evidence setelah paragraf plain.
+- Kalimat lengkap yang bisa diikuti teammate yang sempat pergi. Quote cuma baris load-bearing; jangan dump file/log penuh.
+- Caveats jujur: yang di-skip, masih lemah, gak bisa diverifikasi. Gagal dilapor sebagai gagal dengan output-nya. Docs project prescribe follow-up (deploy/push/send/restart) yang sengaja gak diambil → report WAJIB bawa `PENDING: <action> - awaiting your authorization`.
+- Bersihkan scratch files + test artifacts yang dibuat; note cleanup di report. Judge menganggap leftover debris sebagai fraud signal.
+- Tawarin cuma follow-up yang muncul dari task ini (caveat yang dilist, surprise yang dicatat, scope yang dipotong). Gak ada yang muncul → tutup tanpa follow-up.
+- Sebelum kirim, baca sekali sebagai hostile reviewer: claim gak terverifikasi (verify sekarang atau relabel sebagai caveat), jawaban salah shape buat Step 0, ada yang disentuh di luar scope? Fix, baru kirim.
+- **Artifact gate, cek terakhir sebelum kirim.** Sweep report terhadap yang "dihutang" run ini: behavior berubah tanpa `INTENT:` → tambah; aksi outward tanpa `AUTH:` → tambah; follow-up prescribed sengaja gak diambil tanpa `PENDING:` → tambah; defect difix tanpa `TWINS:` → tambah. Gate cuma nyala kalau ada yang kurang.
 
 ## Surgical Changes (Karpathy)
 
@@ -100,18 +192,22 @@ Setiap project punya folder `knowledge/` sebagai **single source of truth**. Age
 ## Decision Tree
 
 ```
-User request → Is it a build task?
-├─ Yes → Is the problem clearly understood?
-│   ├─ Yes → Phase 2: Spec
-│   └─ No → Phase 1: Understand
-├─ No → Is it a fix/debug?
-│   ├─ Yes → Diagnose first, fix minimal
-│   └─ No → Handle directly
+User request → Triviality gate?
+├─ Trivial (1 file, <10 baris, no search, no behavior baru)
+│   → kerjakan + 1 check + lapor 2 kalimat
+└─ Non-trivial → Step 0: Classify ask
+   ├─ Question/assessment → findings + rekomendasi, jangan ubah apa-apa
+   ├─ Plan-first (scope ambigu / irreversible / minta plan)
+   │   → plan + rekomendasi, stop, minta approval
+   └─ Task → paham masalahnya?
+       ├─ Ya → Phase 2: Spec (evidence dulu)
+       └─ No → Phase 1: Understand (define done)
 ```
 
 ## Workflow
 
 ### Phase 1: Understand
+- **Define done** (Step 1): verifikasi konkret yang bisa diobservasi, bukan "semoga bener"
 - Ask clarifying questions BEFORE writing any code
 - Identify: what problem, who uses it, constraints, success criteria
 - Confirm understanding back to user
@@ -119,6 +215,8 @@ User request → Is it a build task?
 - **Knowledge:** Create `knowledge/KNOWLEDGE.md` with Vision section
 
 ### Phase 2: Spec
+- **Evidence rules** (Step 2): orient dulu, primary sources > memory, parallelize, time-box 2 round
+- **Intent sebelum behavior:** kalau ada test gagal, cek statement intent dulu — test bisa yang salah, bukan cuma kode
 - Write minimal spec using template below
 - Show in digestible chunks (not walls of text)
 - Get explicit approval before proceeding
@@ -126,6 +224,7 @@ User request → Is it a build task?
 - **Knowledge:** Add Architecture + Decisions sections
 
 ### Phase 3: Plan
+- **Decide & commit** (Step 3): satu rekomendasi, alternatif disebut 1 baris kenapa kalah
 - Break into small tasks (~15-30 min each)
 - Mark dependencies between tasks
 - Identify test cases per task
@@ -134,7 +233,8 @@ User request → Is it a build task?
 - **Gate:** User approves plan before proceeding
 - **Knowledge:** Add Progress checklist (all unchecked)
 
-### Phase 4: Implement (Ponytail Mode)
+### Phase 4: Implement (Ponytail Mode + Step 4)
+- **INTENT gate** sebelum edit behavior; **AUTH gate** sebelum aksi irreversible/outward
 - Work through tasks in order
 - YAGNI strictly enforced — build only what spec says
 - Each task:
@@ -146,14 +246,18 @@ User request → Is it a build task?
 - Use subagents for parallel independent tasks
 - **Knowledge:** Update Progress (check done items), add Learnings + Files as they emerge
 
-### Phase 5: Test
-- Run all tests
-- Manual smoke test if applicable
+### Phase 5: Test (Step 5)
+- **Verify by observation** — jalankan/dilihat, bukan disimpulkan dari baca kode
+- Run all tests; manual smoke test if applicable
+- **Twin check** kalau fix defect — search pattern yang sama di seluruh project
+- **Hard bound:** 3 siklus fix-verify gagal → stop, hand back ke user
 - Report pass/fail per task
 - Verify against spec requirements
 - **Knowledge:** Update Progress with test results
 
-### Phase 6: Review + Self-Critique
+### Phase 6: Review + Self-Critique (Step 6)
+- **Report outcome-first** — kalimat pertama jawab "jadi gimana"
+- **Artifact gate:** INTENT/AUTH/PENDING/TWINS line muncul verbatim kalau kondisi terpenuhi
 - Summarize what was built
 - Count lines of code — celebrate low numbers
 - List deviations from spec (with reasons)
@@ -174,6 +278,8 @@ User request → Is it a build task?
 - Keep commits atomic
 - Test before moving to next task
 - Before writing code: "Is there a simpler way?"
+- **Artifact gate:** INTENT/AUTH/PENDING/TWINS line wajib muncul verbatim di report kalau kondisi terpenuhi
+- **Verify by observation:** claim harus dijalankan, bukan disimpulkan. 3 siklus gagal → stop, hand back
 - **Always read `knowledge/README.md` first in any new session** — entry point
 - **If `knowledge/README.md` doesn't exist, create it based on templates**
 - **Always update `knowledge/` files at every phase gate**

@@ -12,13 +12,14 @@ ______   _______                  _______  _______ _________
 </p>
 
 <p align="center" style="margin-top: -20px;">
-  <b>Structured workflow + minimal code + persistent knowledge</b><br>
-  <i>For AI coding agents that forget nothing.</i>
+  <b>Structured workflow + minimal code + Fable evidence loop + persistent knowledge</b><br>
+  <i>For AI coding agents that forget nothing — and verify everything.</i>
 </p>
 
 <p align="center">
   <a href="#quick-start">Quick Start</a> •
   <a href="#the-workflow">Workflow</a> •
+  <a href="#the-fable-loop">Fable Loop</a> •
   <a href="#installation">Installation</a> •
   <a href="#knowledge-portability">Knowledge</a>
 </p>
@@ -35,38 +36,44 @@ AI coding agents are powerful but make predictable mistakes:
  ❌ Scope creep           → refactoring adjacent code during changes
  ❌ Skipping understanding→ jumping straight to code
  ❌ Context loss          → forgetting everything between sessions
+ ❌ Claiming success      → "all tests pass" without actually running them
 ```
 
-**Dev Methodology** fixes all five — with one workflow.
+**Dev Methodology** fixes all six — with one workflow, one evidence loop, and one verification discipline.
 
 ---
 
 ## The DNA
 
-Five sources, five problems solved:
+Six sources, six problems solved:
 
 ```
- ┌─────────────────────────────────────────────────────────────────┐
- │                        DEV METHODOLOGY                         │
- ├──────────────┬──────────────┬──────────────┬────────────────────┤
- │ SUPERPOWERS  │  PONYTAIL    │  ANTHROPIC   │     KARPATHY      │
- │              │              │   SKILLS     │                    │
- │  🕐 WHEN     │  📏 HOW MUCH │  🏗️ HOW      │  🔪 WHERE          │
- │              │              │              │                    │
- │  Workflow    │  Minimal     │  Decision    │  Surgical          │
- │  order       │  code        │  trees +     │  changes —         │
- │  (gates at  │  philosophy  │  checklists  │  touch only        │
- │  every phase)│              │              │  what's needed     │
- └──────────────┴──────────────┴──────────────┴────────────────────┘
-                                    +
-                        ┌───────────────────┐
-                        │  📚 KNOWLEDGE     │
-                        │                   │
-                        │  Persistent       │
-                        │  project context  │
-                        │  across sessions  │
-                        └───────────────────┘
+ ┌─────────────────────────────────────────────────────────────────────┐
+ │                         DEV METHODOLOGY                            │
+ ├──────────────┬──────────────┬──────────────┬───────────────────────┤
+ │ SUPERPOWERS  │  PONYTAIL    │  ANTHROPIC   │      KARPATHY         │
+ │              │              │   SKILLS     │                       │
+ │  🕐 WHEN     │  📏 HOW MUCH │  🏗️ HOW      │  🔪 WHERE             │
+ │              │              │              │                       │
+ │  Workflow    │  Minimal     │  Decision    │  Surgical changes —   │
+ │  order       │  code        │  trees +     │  touch only what's    │
+ │  (gates at   │  philosophy  │  checklists  │  needed               │
+ │  every phase)│              │              │                       │
+ └──────────────┴──────────────┴──────────────┴───────────────────────┘
+        +                     +                            +
+ ┌──────────────┐    ┌──────────────────┐      ┌──────────────────────┐
+ │  📚 KNOWLEDGE│    │  🔍 FABLE        │      │  📏 TRIVIALITY GATE  │
+ │              │    │                  │      │                      │
+ │  Persistent  │    │  Evidence loop:  │      │  <10 baris, 1 file,  │
+ │  project     │    │  classify →      │      │  no search → skip    │
+ │  context     │    │  done → evidence │      │  the 6 phases,       │
+ │  across      │    │  → decide → act  │      │  do it + 1 check     │
+ │  sessions    │    │  → verify →      │      │                      │
+ │              │    │  report          │      │                      │
+ └──────────────┘    └──────────────────┘      └──────────────────────┘
 ```
+
+Fable (from [fable-method](https://github.com/Sahir619/fable-method)) answers *"how do we know each step really happened?"* — the loop turns every claim into something observed, and every report into something auditable. Dev Methodology answers *"what are we building, in what order?"* — the phases, gates, and knowledge capture. The two are orthogonal; this skill runs both.
 
 ---
 
@@ -83,9 +90,10 @@ Five sources, five problems solved:
        ▼               ▼               ▼               ▼               ▼               ▼               ▼
   ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐
   │  GATE:  │    │  GATE:  │    │  GATE:  │    │PONYTAIL │    │VERIFY   │    │  SELF-  │    │ CAPTURE │
-  │ approve │    │ approve │    │ approve │    │ minimal │    │ all     │    │ CRITIQUE│    │ context │
-  │ before  │    │ before  │    │ before  │    │ code +  │    │ tests   │    │ + low   │    │ to file │
-  │ next    │    │ next    │    │ next    │    │ commit  │    │ pass    │    │ LOC     │    │         │
+  │ approve │    │ approve │    │ approve │    │ minimal │    │ by      │    │ CRITIQUE│    │ context │
+  │ before  │    │ before  │    │ before  │    │ code +  │    │ observ- │    │ + low   │    │ to file │
+  │ next    │    │ next    │    │ next    │    │ INTENT/ │    │ ation + │    │ LOC     │    │         │
+  │         │    │         │    │         │    │ AUTH    │    │ TWINS   │    │         │    │         │
   └─────────┘    └─────────┘    └─────────┘    └─────────┘    └─────────┘    └─────────┘    └─────────┘
        │               │               │               │               │               │               │
        ▼               ▼               ▼               ▼               ▼               ▼               ▼
@@ -94,6 +102,50 @@ Five sources, five problems solved:
 ```
 
 > Every phase auto-updates `knowledge/KNOWLEDGE.md`. New sessions read it first → **zero context loss**.
+> Every phase runs inside the Fable loop below → **zero unverified claims**.
+
+---
+
+## The Fable Loop
+
+Setiap tugas non-trivial dijalankan lewat loop ini. Loop menyatu dengan phase — bukan lapisan terpisah:
+
+```
+                     ┌────────────────────────────────────────────────────────────┐
+                     │                        FABLE LOOP                          │
+                     │                                                            │
+ ask ──► ┌────────┐ ┌┴─────────┐ ┌──────────┐ ┌──────────┐ ┌─────────┐ ┌────────┐ ┌┴────────┐
+         │TRIVIAL?│ │0 CLASSIFY│ │1 DEFINE  │ │2 EVIDENCE│ │3 DECIDE │ │4 ACT   │ │5 VERIFY │
+         │1 file, │ │question/ │ │DONE      │ │orient →  │ │satu     │ │INTENT  │ │by       │
+         │<10 baris││task/plan-│ │verifikasi │ │primary → │ │rekomend-│ │gate +  │ │observ-  │
+         │no search│ │first?    │ │konkret   │ │parallel →│ │asi +    │ │AUTH    │ │ation +  │
+         └───┬─────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬────┘ └───┬────┘ └────┬────┘
+             │yes         │            │            │            │          │          │
+             ▼            │            │            │            │          │          │
+      kerjakan + 1 check  │            │            │            │          │          │
+      + lapor 2 kalimat   │            │            │            │          │          │
+                          │            │            │            │          │          ▼
+                          │            │            │            │          │      ┌─────────┐
+                          │            │            │            │          │      │6 REPORT │
+                          │            │            │            │          │      │outcome- │
+                          │            │            │            │          │      │first +  │
+                          │            │            │            │          │      │artifact │
+                          │            │            │            │          │      │gate     │
+                          └────────────┴────────────┴────────────┴──────────┴──────┴─────────┘
+                                        (non-trivial → loop penuh, 0 → 6)
+```
+
+### Phase ↔ Fable mapping
+
+| Fable step | Isi | Hook ke phase |
+|---|---|---|
+| 0 · Classify | question / task / plan-first? Tie-break: plan-first menang | Sebelum Phase 1 — gate masuk |
+| 1 · Define done | verifikasi konkret yang bisa diobservasi, bukan "semoga bener" | Phase 1 · Understand |
+| 2 · Evidence | orient dulu, primary sources > memory, parallelize, time-box 2 round | Phase 2 · Spec |
+| 3 · Decide | satu rekomendasi, alternatif disebut 1 baris kenapa kalah | Phase 3 · Plan |
+| 4 · Act | INTENT gate + AUTH gate + recall gate, surgical, smallest change | Phase 4 · Implement |
+| 5 · Verify | dijalankan/dilihat, twin check, hard bound 3 siklus → stop | Phase 5 · Test |
+| 6 · Report | outcome-first, caveat jujur, artifact gate (INTENT/AUTH/PENDING/TWINS) | Phase 6 · Review |
 
 ---
 
@@ -135,39 +187,51 @@ Your `knowledge/KNOWLEDGE.md` is **plain markdown** — own the data, export any
 
 ## What Each Phase Does
 
-### Phase 1: Understand 🤔
+### Phase 1: Understand 🤔 — *define done dulu*
 ```
- Ask questions → Identify problem → Confirm with user
+ Classify ask (Step 0) → Define done (Step 1) → Ask questions → Confirm
+ └─ Verifikasi: observasi konkret ("test ini pass", "halaman ini render")
  └─ 📚 Create knowledge/KNOWLEDGE.md with Vision section
 ```
 
-### Phase 2: Spec 📝
+### Phase 2: Spec 📝 — *evidence dulu*
 ```
- Write minimal spec → Show in chunks → Get approval
+ Orient project → Evidence (Step 2): primary sources, parallel, time-box
+ → Intent check: kalau ada test gagal, cek spec/README dulu (test bisa yang salah)
+ → Write minimal spec → Show in chunks → Get approval
  └─ 📚 Add Architecture + Decisions sections
 ```
 
-### Phase 3: Plan 📋
+### Phase 3: Plan 📋 — *satu rekomendasi*
 ```
- Break into tasks → Mark dependencies → Identify test cases
+ Decide & commit (Step 3): satu rekomendasi, alternatif 1 baris kenapa kalah
+ → Break into tasks → Mark dependencies → Identify test cases
+ → AUTH gate kalau ada aksi irreversible/outward-facing
  └─ 📚 Add Progress checklist (all unchecked)
 ```
 
-### Phase 4: Implement ⚡
+### Phase 4: Implement ⚡ — *surgical + gates*
 ```
- Check existing → Implement minimal → Test → Commit
+ INTENT gate: "code does X; check expects Y; spec says Z" — wajib sebelum edit behavior
+ → AUTH gate: aksi outward butuh quote user sendiri
+ → Check existing → Implement minimal → Test → Commit
  └─ 📚 Update Progress, add Learnings + Files
 ```
 
-### Phase 5: Test ✅
+### Phase 5: Test ✅ — *verify by observation*
 ```
- Run all tests → Manual smoke test → Report pass/fail
+ Jalankan, bukan baca kode. Twin check: habis fix defect, search pattern yang sama
+ → Run all tests → Manual smoke test → Report pass/fail
+ → Hard bound: 3 siklus gagal → stop, hand back ke user
  └─ 📚 Update Progress with test results
 ```
 
-### Phase 6: Review 🎯
+### Phase 6: Review 🎯 — *outcome-first + artifact gate*
 ```
- Summarize → Count LOC → Self-critique checklist
+ Kalimat pertama = "jadi gimana". Caveat jujur. Artifact gate:
+ INTENT: line muncul kalau behavior berubah | AUTH: kalau aksi outward diambil
+ PENDING: kalau follow-up prescribed sengaja gak diambil | TWINS: kalau defect difix
+ → Summarize → Count LOC → Self-critique checklist
  └─ 📚 Add Next section with follow-ups
 ```
 
@@ -198,6 +262,14 @@ Your `knowledge/KNOWLEDGE.md` is **plain markdown** — own the data, export any
 ```
  Each phase requires user approval.
  No skipping ahead (without a warning).
+```
+
+### 🔍 Fable Evidence Loop (fable-method)
+```
+ Setiap claim harus diobservasi, bukan disimpulkan.
+ INTENT / AUTH / PENDING / TWINS line wajib verbatim kalau kondisinya terpenuhi.
+ Test gagal = 2 tersangka: kode ATAU check-nya. Cek spec dulu, jangan asal fix.
+ 3 siklus fix-verify gagal → STOP, hand back, jangan ngotot.
 ```
 
 ---
@@ -298,6 +370,9 @@ After every implementation:
  [ ] Is it the simplest thing that works?
  [ ] Every changed line traces to user's request
  [ ] Would a senior engineer say this is overcomplicated?
+ [ ] Setiap claim diverifikasi by observation — bukan dibaca dari kode
+ [ ] INTENT/AUTH/PENDING/TWINS line ada kalau kondisi terpenuhi (artifact gate)
+ [ ] Caveat jujur: apa yang di-skip, masih lemah, gak bisa diverifikasi
 ```
 
 ---

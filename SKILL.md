@@ -250,7 +250,11 @@ User request → Triviality gate?
 - **Verify by observation** — jalankan/dilihat, bukan disimpulkan dari baca kode
 - Run all tests; manual smoke test if applicable
 - **Twin check** kalau fix defect — search pattern yang sama di seluruh project
-- **Security scan (opsional, sesuai kebutuhan):** kalau task nyentuh web/API/auth/input handling — jalankan pentest pakai skill `penetration-testing-with-strix` sebagai verifikasi tambahan. Hasil findings → skill `fix-security-vulnerabilities-with-strix`. Untuk CI/PR scanning → `ci-security-scanning-with-strix`; butuh managed cloud tanpa infra lokal → `managed-pentesting-with-strix`. Panggil saat dibutuhkan aja, bukan tiap task.
+- **Security scan (opsional — WAJIB tanya user dulu):** kalau task nyentuh web/API/auth/input handling, tawarkan pentest:
+  1. Info user: skill `penetration-testing-with-strix` butuh install (`npx skills add usestrix/strix --skill penetration-testing-with-strix --yes`) + Docker jalan + LLM API key
+  2. Kasih 2 pilihan: **[1] setup sekarang** / **[2] skip**
+  3. Setup → install + jalankan; findings → `fix-security-vulnerabilities-with-strix`. Skip → lanjut, catat `PENDING: security scan di-skip - user pilih skip`
+  4. Kalau setup gagal (Docker/key gak ada) → jangan maksa, jangan pura-pura scan: `PENDING: security scan gagal setup - <alasan>`
 - **Hard bound:** 3 siklus fix-verify gagal → stop, hand back ke user
 - Report pass/fail per task
 - Verify against spec requirements
@@ -259,6 +263,7 @@ User request → Triviality gate?
 ### Phase 6: Review + Self-Critique (Step 6)
 - **Report outcome-first** — kalimat pertama jawab "jadi gimana"
 - **Artifact gate:** INTENT/AUTH/PENDING/TWINS line muncul verbatim kalau kondisi terpenuhi
+- **Anti-slop writing (opsional, auto-install):** kalau output task = user-facing writing (README, docs, changelog, report, blog post) → cek skill `no-ai-slop`. Belum ada? Install langsung tanpa tanya: `npx skills add petergyang/no-ai-slop --skill no-ai-slop --yes`. Lalu jalankan aturannya buat bersihin AI-slop pattern (binary contrast, throat-clearing, fake-profound, dst) sebelum teks dikirim
 - Summarize what was built
 - Count lines of code — celebrate low numbers
 - List deviations from spec (with reasons)
@@ -271,6 +276,17 @@ User request → Triviality gate?
   - [ ] Is it the simplest thing that works?
 - Suggest next steps or improvements
 - **Knowledge:** Add Next section with follow-ups and known issues
+
+## Optional Dependencies
+
+Skill-skill berikut dipakai sebagai quality gate opsional — bukan bundel, tapi referensi. Install di agent masing-masing (bukan di repo ini) biar update upstream selalu nyampe.
+
+| Skill | Sumber | Kapan dipakai | Install | Perlu tanya user? |
+|---|---|---|---|---|
+| `penetration-testing-with-strix` | usestrix/strix | Phase 5: task nyentuh web/API/auth/input | `npx skills add usestrix/strix --skill penetration-testing-with-strix --yes` | ✅ WAJIB (butuh Docker + LLM API key) |
+| `no-ai-slop` | petergyang/no-ai-slop | Phase 6: output user-facing writing | `npx skills add petergyang/no-ai-slop --skill no-ai-slop --yes` | ❌ gak perlu (cuma file rules) |
+
+Kalau skill belum terinstall dan hook kepanggil: ikuti kebijakan di atas (tanya / auto-install). Kalau gak jadi jalan → catat `PENDING:` di report, jangan di-skip diam-diam.
 
 ## Rules
 - Never skip Phase 1-2 (understand + spec)

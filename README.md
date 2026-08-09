@@ -222,9 +222,9 @@ Your `knowledge/KNOWLEDGE.md` is **plain markdown** — own the data, export any
 ```
  Jalankan, bukan baca kode. Twin check: habis fix defect, search pattern yang sama
  → Run all tests → Manual smoke test → Report pass/fail
- → Security scan (opsional): task nyentuh web/API/auth/input → panggil skill
-   penetration-testing-with-strix; fix findings → fix-security-vulnerabilities-with-strix;
-   CI/PR → ci-security-scanning-with-strix; cloud tanpa infra → managed-pentesting-with-strix
+ → Security scan (opsional — WAJIB tanya user dulu): task nyentuh web/API/auth/input
+   → tawarkan skill penetration-testing-with-strix (butuh Docker + LLM API key)
+   → user pilih: [1] setup sekarang / [2] skip. Skip/gagal → catat PENDING: di report
  → Hard bound: 3 siklus gagal → stop, hand back ke user
  └─ 📚 Update Progress with test results
 ```
@@ -234,6 +234,9 @@ Your `knowledge/KNOWLEDGE.md` is **plain markdown** — own the data, export any
  Kalimat pertama = "jadi gimana". Caveat jujur. Artifact gate:
  INTENT: line muncul kalau behavior berubah | AUTH: kalau aksi outward diambil
  PENDING: kalau follow-up prescribed sengaja gak diambil | TWINS: kalau defect difix
+ → Anti-slop writing (opsional, auto-install): output user-facing writing
+   (README/docs/changelog/report) → cek & install skill no-ai-slop kalau belum ada
+   → jalankan aturannya sebelum teks dikirim
  → Summarize → Count LOC → Self-critique checklist
  └─ 📚 Add Next section with follow-ups
 ```

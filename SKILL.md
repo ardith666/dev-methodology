@@ -300,6 +300,27 @@ Skill-skill berikut dipakai sebagai quality gate opsional — bukan bundel, tapi
 
 Kalau skill belum terinstall dan hook kepanggil: ikuti kebijakan di atas (tanya / auto-install). Kalau gak jadi jalan → catat `PENDING:` di report, jangan di-skip diam-diam.
 
+## API Robustness (kalau task nyentuh API endpoint)
+
+Dua aturan wajib kalau task bikin/ubah endpoint — bukan opsional:
+
+### Idempotency ID
+
+- **Wajib di:** POST/PUT yang efeknya dobel kalau dipanggil 2x (create order, transfer, register)
+- **Cara:** client kirim `Idempotency-Key` header (UUID). Server simpan key + response pertama; request berikutnya dengan key sama → return response tersimpan, jangan eksekusi ulang
+- **Simpel:** simpan di tabel `idempotency(key PK, response JSON, created_at)` + TTL (misal 24 jam). Bukan logika in-memory yang hilang pas restart
+- **Gak perlu:** GET/DELETE/query yang murni read
+
+### Rate Limit
+
+- **Wajib di:** endpoint publik atau yang butuh auth (login, register, OTP, scraping-prone)
+- **Cara:** batasi per user/IP, misal fixed window: `X request / menit`. Login: 5-10/menit. API umum: 60-100/menit
+- **Response:** `429 Too Many Requests` + header `Retry-After` — client tau kapan bisa coba lagi
+- **Simpel:** Redis `INCR + EXPIRE`, atau middleware library (express-rate-limit, gin-limiter, dll). Jangan reinvent
+- **Verifikasi (Phase 5):** test 2x lipat limit → harus dapet 429, bukan 200
+
+Kalau task gak nyentuh API → section ini skip, gak perlu diimplement.
+
 ## Rules
 - Never skip Phase 1-2 (understand + spec)
 - Each phase requires user approval before next

@@ -166,8 +166,10 @@ Then just say: **"dev mode"** or ask to build something.
 
 ## Version
 
-Current: **v1.2.0** (lihat tag repo)
+Current: **v1.3.0** (lihat tag repo)
 
+- v1.3.0 — API Robustness section (idempotency key + rate limit)
+- v1.2.1 — README: version history + optional deps
 - v1.2.0 — Communication rules (ADHD-friendly, berlaku semua phase)
 - v1.1.0 — no-ai-slop hook Phase 6 + Strix ask-user policy + optional dependencies table
 - v1.0.0 — Baseline: dev-methodology + Strix security skills (Phase 5 optional hook)
@@ -277,6 +279,25 @@ ADHD-friendly output — action first, tanpa basa-basi:
 ---
 
 ## Core Principles
+
+## API Robustness
+
+Kalau task bikin/ubah API endpoint, dua aturan wajib (bukan opsional):
+
+**Idempotency ID** — POST/PUT yang efeknya dobel kalau dipanggil 2x:
+- Client kirim `Idempotency-Key` header (UUID) → server simpan key + response pertama
+- Request sama dengan key yang sama → return response tersimpan, jangan eksekusi ulang
+- Simpen di tabel `idempotency(key PK, response, created_at)` + TTL, bukan in-memory
+
+**Rate Limit** — endpoint publik/auth (login, register, OTP, scraping-prone):
+- Batasi per user/IP: login 5-10/menit, API umum 60-100/menit
+- Response `429` + header `Retry-After`
+- Pakai Redis INCR+EXPIRE atau middleware library — jangan reinvent
+- Verifikasi Phase 5: test 2x lipat limit → harus 429
+
+Kalau task gak nyentuh API → section ini skip.
+
+---
 
 ### 🎯 Minimal Code (Ponytail)
 ```

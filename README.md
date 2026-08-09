@@ -222,6 +222,9 @@ Your `knowledge/KNOWLEDGE.md` is **plain markdown** — own the data, export any
 ```
  Jalankan, bukan baca kode. Twin check: habis fix defect, search pattern yang sama
  → Run all tests → Manual smoke test → Report pass/fail
+ → Security scan (opsional): task nyentuh web/API/auth/input → panggil skill
+   penetration-testing-with-strix; fix findings → fix-security-vulnerabilities-with-strix;
+   CI/PR → ci-security-scanning-with-strix; cloud tanpa infra → managed-pentesting-with-strix
  → Hard bound: 3 siklus gagal → stop, hand back ke user
  └─ 📚 Update Progress with test results
 ```

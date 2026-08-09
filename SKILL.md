@@ -250,6 +250,7 @@ User request → Triviality gate?
 - **Verify by observation** — jalankan/dilihat, bukan disimpulkan dari baca kode
 - Run all tests; manual smoke test if applicable
 - **Twin check** kalau fix defect — search pattern yang sama di seluruh project
+- **Security scan (opsional, sesuai kebutuhan):** kalau task nyentuh web/API/auth/input handling — jalankan pentest pakai skill `penetration-testing-with-strix` sebagai verifikasi tambahan. Hasil findings → skill `fix-security-vulnerabilities-with-strix`. Untuk CI/PR scanning → `ci-security-scanning-with-strix`; butuh managed cloud tanpa infra lokal → `managed-pentesting-with-strix`. Panggil saat dibutuhkan aja, bukan tiap task.
 - **Hard bound:** 3 siklus fix-verify gagal → stop, hand back ke user
 - Report pass/fail per task
 - Verify against spec requirements

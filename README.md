@@ -164,6 +164,27 @@ cp dev-methodology/SKILL.md ~/.agents/skills/dev-methodology/SKILL.md
 
 Then just say: **"dev mode"** or ask to build something.
 
+## Version
+
+Current: **v1.2.0** (lihat tag repo)
+
+- v1.2.0 — Communication rules (ADHD-friendly, berlaku semua phase)
+- v1.1.0 — no-ai-slop hook Phase 6 + Strix ask-user policy + optional dependencies table
+- v1.0.0 — Baseline: dev-methodology + Strix security skills (Phase 5 optional hook)
+
+Cek update: `git fetch --tags && git tag -l` — versi terbaru = tag tertinggi.
+
+## Optional Dependencies
+
+Quality gate opsional — bukan bundel, referensi. Install di agent (bukan di repo ini) biar update upstream selalu nyampe:
+
+| Skill | Sumber | Kapan dipakai | Install | Perlu tanya user? |
+|---|---|---|---|---|
+| `penetration-testing-with-strix` | usestrix/strix | Phase 5: task nyentuh web/API/auth/input | `npx skills add usestrix/strix --skill penetration-testing-with-strix --yes` | ✅ WAJIB (butuh Docker + LLM API key) |
+| `no-ai-slop` | petergyang/no-ai-slop | Phase 6: output user-facing writing | `npx skills add petergyang/no-ai-slop --skill no-ai-slop --yes` | ❌ gak perlu (cuma file rules) |
+
+Kalau skill belum terinstall dan hook kepanggil: ikuti kebijakan (tanya / auto-install). Gak jadi jalan → catat `PENDING:` di report, jangan di-skip diam-diam.
+
 ---
 
 ## Knowledge Portability

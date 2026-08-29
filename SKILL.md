@@ -1,6 +1,6 @@
 ---
 name: dev-methodology
-version: 3.0.0
+version: 3.0.1
 description: "Structured software development workflow: ask → spec → plan → implement → test → review → knowledge, dengan Fable execution loop (classify → define done → evidence → decide → act → verify → report) + Obsidian Integration (vault-native knowledge, retain via vault). Use when building, creating, or implementing something."
 ---
 
@@ -422,7 +422,7 @@ Modul aktif saat CWD ada di dalam **vault Obsidian** (folder `.obsidian/` di CWD
 - **Phase 3** — kalau task list berulang/progress di-track, buat `tracker.base` (lihat bases.md).
 - **Phase 4** — update `knowledge/` Vault-native + status di tracker base.
 - **Phase 5** — catat hasil test (pass/fail/skip) ke note status, berbasis observasi.
-- **Phase 6** — entry append-only `[YYYY-MM-DD]` di `knowledge/history.md`; tulis `Next` + sambungkan via wikilink; kalau proyek punya relasi yang bisa divisualkan → buat/update `.canvas`.
+- **Phase 6** — entry append-only `[YYYY-MM-DD]` di `knowledge/history.md`; tulis `Next` + sambungkan via wikilink; kalau proyek punya relasi yang bisa divisualkan → buat/update `.canvas`. Verifikasi health graph setelahnya: `obsidian unresolved` + `obsidian orphans` (aturan di `references/obsidian/README.md` § Vault Hygiene).
 
 Knowledge Capture di atas tetap berlaku; perbedaannya: saat di vault, semua file `knowledge/*` ikut **vault-native** (frontmatter + wikilinks + tags) supaya ter-retain & terindeks Obsidian.
 

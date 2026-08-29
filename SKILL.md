@@ -1,6 +1,7 @@
 ---
 name: dev-methodology
-description: "Structured software development workflow: ask → spec → plan → implement → test → review → knowledge, dengan Fable execution loop (classify → define done → evidence → decide → act → verify → report). Use when building, creating, or implementing something."
+version: 3.0.0
+description: "Structured software development workflow: ask → spec → plan → implement → test → review → knowledge, dengan Fable execution loop (classify → define done → evidence → decide → act → verify → report) + Obsidian Integration (vault-native knowledge, retain via vault). Use when building, creating, or implementing something."
 ---
 
 # Dev Methodology
@@ -402,6 +403,32 @@ Kalau task gak nyentuh API → section ini skip, gak perlu diimplement.
   - Existing solution: [what already exists]
   - Test: [how to verify]
 ```
+
+## Obsidian Integration (vault-aware)
+
+Modul aktif saat CWD ada di dalam **vault Obsidian** (folder `.obsidian/` di CWD atau parent) atau user minta pakai Obsidian. Referensi lengkap: `references/obsidian/` di skill ini — `README.md` = gateway (filosofi, 4 alur retain, retention policy, dependency & self-healing), `markdown.md` / `bases.md` / `canvas.md` / `cli.md` / `defuddle.md` = detail sintaks.
+
+### Prinsip
+
+1. **Vault-native writing** — semua note/knowledge di vault ditulis dengan frontmatter (`title`, `tags`, `status`, `created`), `[[wikilinks]]` untuk rujukan antar-note, `#tag` taksonomi, callout untuk info penting, embed `![[...]]` untuk reuse. Bukan plain markdown.
+2. **Empat alur retain** — mencatat, merangkum (defuddle → distilasi → note), mengkoneksikan (wikilink/base/canvas), meretain (append-only + timestamp). Detail: `references/obsidian/README.md`.
+3. **Retention restraint** — HANYA tulis continuity artifacts: keputusan, learning, status, ringkasan bahan yang di-ingest, index/bases/canvas, update `knowledge/`. JANGAN buat catatan penuh milik user.
+4. **Progressive disclosure** — `SKILL.md` ini tetap ringkas; baca `references/obsidian/*` hanya saat fitur dibutuhkan.
+
+### Hook per phase
+
+- **Phase 1** — baca vault dulu (note terkait/backlink; `obsidian search` kalau CLI ada). Mulai note project dengan frontmatter.
+- **Phase 2** — evidence: orient vault duluan; hasil riset web via `defuddle parse <url> --md` → ringkas → simpan note → wikilink ke note project.
+- **Phase 3** — kalau task list berulang/progress di-track, buat `tracker.base` (lihat bases.md).
+- **Phase 4** — update `knowledge/` Vault-native + status di tracker base.
+- **Phase 5** — catat hasil test (pass/fail/skip) ke note status, berbasis observasi.
+- **Phase 6** — entry append-only `[YYYY-MM-DD]` di `knowledge/history.md`; tulis `Next` + sambungkan via wikilink; kalau proyek punya relasi yang bisa divisualkan → buat/update `.canvas`.
+
+Knowledge Capture di atas tetap berlaku; perbedaannya: saat di vault, semua file `knowledge/*` ikut **vault-native** (frontmatter + wikilinks + tags) supaya ter-retain & terindeks Obsidian.
+
+### Dependency & Self-Healing
+
+Cek-req → **tanya user → bantu deploy → verify**. Kurang sesuatu (Obsidian app, CLI belum enabled, PATH, defuddle, node)? Pakai tabel + perintah di `references/obsidian/README.md`. Aksi sistem (npm install -g, ubah shell rc, symlink) butuh AUTH. Gagal → pakai yang tersedia (file ops selalu jalan), fitur yang kurang di-skip dan dicatat `PENDING:`.
 
 ## Knowledge Tracking
 

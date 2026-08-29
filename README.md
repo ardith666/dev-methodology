@@ -164,17 +164,28 @@ cp dev-methodology/SKILL.md ~/.agents/skills/dev-methodology/SKILL.md
 
 Then just say: **"dev mode"** or ask to build something.
 
+## Obsidian Integration
+
+Modul `references/obsidian/*` = cara skill ini terhubung ke vault Obsidian: **mencatat, merangkum (defuddle), mengkoneksikan (wikilink/base/canvas), meretain** pengetahuan lintas sesi & lintas mesin.
+
+- Saat bekerja di dalam vault → semua `knowledge/*` ditulis **vault-native** (frontmatter + wikilinks + tags) + update tracker/base/canvas sesuai phase.
+- **Dependency self-healing** — kurang Obsidian / CLI / defuddle / node → tanya user → bantu deploy → verify. Detail: `references/obsidian/README.md`.
+- Setup per mesin: `git pull` skill repo + `npm install -g defuddle` + enable Obsidian CLI (Settings → General → Advanced).
+- Konten diadaptasi dari [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) (MIT).
+
 ## Version
 
-Current: **v1.3.0** (lihat tag repo)
+Current: **v3.0.0** (lihat `VERSION` + tag repo)
 
+- v3.0.0 — **Obsidian Integration Module** (`references/obsidian/*`): vault-native capture, 4 retention flows (mencatat/merangkum/mengkoneksikan/meretain), dependency self-healing, `version:` di frontmatter SKILL.md
+- v2.3.0 — (tag sebelumnya)
 - v1.3.0 — API Robustness section (idempotency key + rate limit)
 - v1.2.1 — README: version history + optional deps
 - v1.2.0 — Communication rules (ADHD-friendly, berlaku semua phase)
 - v1.1.0 — no-ai-slop hook Phase 6 + Strix ask-user policy + optional dependencies table
 - v1.0.0 — Baseline: dev-methodology + Strix security skills (Phase 5 optional hook)
 
-Cek update: `git fetch --tags && git tag -l` — versi terbaru = tag tertinggi.
+Cek update: `git fetch --tags && git tag -l` — versi terbaru = tag tertinggi. Agent di mesin lain: bandingkan `version:` frontmatter lokal dengan tag remote.
 
 ## Optional Dependencies
 

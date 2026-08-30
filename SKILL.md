@@ -1,6 +1,6 @@
 ---
 name: dev-methodology
-version: 3.0.1
+version: 3.1.0
 description: "Structured software development workflow: ask → spec → plan → implement → test → review → knowledge, dengan Fable execution loop (classify → define done → evidence → decide → act → verify → report) + Obsidian Integration (vault-native knowledge, retain via vault). Use when building, creating, or implementing something."
 ---
 
@@ -429,6 +429,29 @@ Knowledge Capture di atas tetap berlaku; perbedaannya: saat di vault, semua file
 ### Dependency & Self-Healing
 
 Cek-req → **tanya user → bantu deploy → verify**. Kurang sesuatu (Obsidian app, CLI belum enabled, PATH, defuddle, node)? Pakai tabel + perintah di `references/obsidian/README.md`. Aksi sistem (npm install -g, ubah shell rc, symlink) butuh AUTH. Gagal → pakai yang tersedia (file ops selalu jalan), fitur yang kurang di-skip dan dicatat `PENDING:`.
+
+## Graphify Integration (codebase intelligence)
+
+Modul aktif saat bekerja di codebase yang punya `graphify-out/` (knowledge graph) atau saat perlu memahami arsitektur project — **map dulu, query, bukan grep**. Referensi: `references/graphify/README.md` (filosofi, perintah inti, dependensi & self-healing, atribusi Graphify-Labs).
+
+### Prinsip
+
+1. **Query-first** — kalau project punya graph, tanya `graphify query` / `path` / `explain` dulu sebelum baca file satu-satu. Jangan grep kalau graph sudah ada.
+2. **Local-first** — AST tree-sitter, 0 token LLM untuk kode (docs/media baru butuh model). `--code-only` = offline penuh.
+3. **Honest audit trail** — edge berlabel `EXTRACTED` (eksplisit) / `INFERRED` (resolusi graphify); jangan tampilkan INFERRED sebagai fakta.
+4. **Graph harus segar** — setelah ngoding, `graphify update .` (atau andalkan `graphify hook install`). Query graph basi = informasi salah.
+5. **Hasil → `knowledge/`** — semua hasil sesi (digest graph, temuan, ringkasan GRAPH_REPORT) masuk folder `knowledge/`; jangan buat file hasil di luar folder itu (satu-satunya pengecualian: artefak teknis `graphify-out/` yang wajib di-commit ke repo).
+
+### Hook per phase
+
+- **Phase 1** — kalau `graphify-out/` ada: buka dengan `graphify query "arsitektur ..."` / `explain` sebelum membaca file. Belum ada → tawarkan `/graphify .` (jalankan diagram pakai skill graphify).
+- **Phase 2** — evidence: `graphify path "A" "B"` buat melacak alur antar konsep saat riset kode existing; `graphify add <url>` untuk paper/video. Catat temuan ke `knowledge/`.
+- **Phase 4** — setelah implementasi signifikan: `graphify update .` biar graph nyambung dengan kode baru.
+- **Phase 6** — verifikasi: `graphify update .` + pastikan `GRAPH_REPORT.md` mencerminkan struktur final; tulis summary & lessons ke `knowledge/` (ikut format knowledge timeline/decision).
+
+### Dependency & Self-Healing
+
+Cek-req → **tanya user → bantu deploy → verify.** Perlu `uv tool install graphifyy` (CLI `graphify`, PATH `~/.local/bin`) + `graphify install --platform agents` (skill global) — aksi install butuh AUTH. **Prompt ke user ada di `references/graphify/README.md`** (cek-req, prompt AUTH, deploy & verify) — ikuti itu saat mesin belum punya graphify. Gagal → grep/manual file ops seperti biasa, dicatat `PENDING:` di `knowledge/`.
 
 ## Knowledge Tracking
 

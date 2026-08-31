@@ -1,6 +1,6 @@
 ---
 name: dev-methodology
-version: 3.1.0
+version: 3.1.1
 description: "Structured software development workflow: ask → spec → plan → implement → test → review → knowledge, dengan Fable execution loop (classify → define done → evidence → decide → act → verify → report) + Obsidian Integration (vault-native knowledge, retain via vault). Use when building, creating, or implementing something."
 ---
 
@@ -441,6 +441,24 @@ Modul aktif saat bekerja di codebase yang punya `graphify-out/` (knowledge graph
 3. **Honest audit trail** — edge berlabel `EXTRACTED` (eksplisit) / `INFERRED` (resolusi graphify); jangan tampilkan INFERRED sebagai fakta.
 4. **Graph harus segar** — setelah ngoding, `graphify update .` (atau andalkan `graphify hook install`). Query graph basi = informasi salah.
 5. **Hasil → `knowledge/`** — semua hasil sesi (digest graph, temuan, ringkasan GRAPH_REPORT) masuk folder `knowledge/`; jangan buat file hasil di luar folder itu (satu-satunya pengecualian: artefak teknis `graphify-out/` yang wajib di-commit ke repo).
+
+### Git: commit vs ignore `graphify-out/`
+
+Saat commit repo project, split file `graphify-out/`:
+
+**Commit (output grafis/navigasi + state lintas-mesin):**
+- `graph.json`, `graph.html`, `GRAPH_REPORT.md`, `manifest.json`, `cost.json`, `.graphify_labels.json`
+
+**Ignore (state mesin lokal + cache build — regenerable, path absolut beda per mesin):**
+
+```gitignore
+# graphify local machine state + build cache
+graphify-out/cache/
+graphify-out/.graphify_python
+graphify-out/.graphify_root
+```
+
+Alasan: `.graphify_python`/`.graphify_root` berisi path absolut interpreter & root **mesin lokal** (bocor struktur lokal + patah di mesin lain); `cache/` = cache build internal (2MB+, beda isi per environment). Graphify skill punya interpreter-guard — kalau `.graphify_python` hilang, ia re-resolve otomatis. Terapkan blok `gitignore` ini di AGENTS.md/README project setelah generate graph pertama.
 
 ### Hook per phase
 

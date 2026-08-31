@@ -175,8 +175,9 @@ Modul `references/obsidian/*` = cara skill ini terhubung ke vault Obsidian: **me
 
 ## Version
 
-Current: **v3.1.0** (lihat `VERSION` + tag repo)
+Current: **v3.1.1** (lihat `VERSION` + tag repo)
 
+- v3.1.1 — **Graphify gitignore rule**: panduan commit-vs-ignore `graphify-out/` (commit graph.json/html/GRAPH_REPORT/manifest/cost/labels; ignore `cache/`, `.graphify_python`, `.graphify_root`); blok gitignore utk terapkan di repo project
 - v3.1.0 — **Graphify Integration** (modul baru `references/graphify/`): knowledge graph codebase (extract/query/path/explain, offline `--code-only`), query-first di Phase 1/2/4/6; aturan hasil → `knowledge/`; cara instalasi & deploy per mesin + prompt AUTH ke user
 - v3.0.1 — **Vault Hygiene** (`references/obsidian/README.md`): graph check `unresolved`/`orphans` + 7 aturan dari audit nyata; hook Phase 6 verifikasi health graph
 - v3.0.0 — **Obsidian Integration Module** (`references/obsidian/*`): vault-native capture, 4 retention flows (mencatat/merangkum/mengkoneksikan/meretain), dependency self-healing, `version:` di frontmatter SKILL.md

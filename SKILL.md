@@ -192,6 +192,17 @@ Setiap project punya folder `knowledge/` sebagai **single source of truth**. Age
 - **Be specific** — "Used SQLite for simplicity, no server needed" not "Chose database"
 - **Read on start** — first action in any session: read `knowledge/KNOWLEDGE.md`
 
+### ⛔ HARD RULES — output WAJIB masuk `knowledge/`
+
+Lokasi output agent **haram di luar `knowledge/`**. Berlaku untuk SEMUA artifact, dari skill apapun (dev-meth, uiux-meth, diagram-design, superpowers, dll):
+
+1. **Satu-satunya direktori output** = `knowledge/` di root project. Artifact apa pun (diagram, riset, digest, design system, report) → `knowledge/`, subfolder boleh (`knowledge/diagrams/`, `knowledge/research/`, dst)
+2. **DILARANG bikin folder baru di luar `knowledge/`** — termasuk `docs/`, `notes/`, `research/`, `artifacts/`, `superpowers/`, atau folder bernama apa pun di root project atau di dalam repo
+3. **DILARANG nulis file non-standar di luar knowledge** — laporan, catatan, diagram, dump — semua masuk `knowledge/` dengan format standar (frontmatter + struktur baku kalau vault-native)
+4. **Pengecualian satu-satunya**: artefak teknis yang memang wajib di-commit ke repo di luar knowledge (mis. `graphify-out/`, kode yang diminta user, config). Kalau ragu → tanya user, jangan asumsi
+5. **Format file knowledge**: kalau project di dalam vault Obsidian → vault-native (frontmatter `title/tags/status/created` + wikilink). Di luar vault → markdown standar. Gak ada format lain
+6. **Pelanggaran = defect**. Kalau ketemu artifact di luar knowledge → pindahkan ke `knowledge/`, lapor di report (bukan cuma dibiarin)
+
 ## Decision Tree
 
 ```
@@ -348,6 +359,7 @@ Kalau task gak nyentuh API → section ini skip, gak perlu diimplement.
 - **Always read `knowledge/README.md` first in any new session** — entry point
 - **If `knowledge/README.md` doesn't exist, create it based on templates**
 - **Always update `knowledge/` files at every phase gate**
+- **⛔ HARD RULE:** semua artifact/output agent WAJIB masuk `knowledge/` — DILARANG bikin folder/file non-standar di luar `knowledge/` (lihat § Knowledge Capture → HARD RULES)
 
 ## Templates
 

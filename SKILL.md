@@ -8,6 +8,8 @@ description: "Structured software development workflow: ask → spec → plan �
 
 Structured development workflow + minimal code philosophy + Fable evidence loop + quality discipline + persistent knowledge. Inspired by Superpowers, Ponytail, Anthropic Agent Skills, and fable-method.
 
+**Umbrella skill.** Absorbs: `dev-methods` (code review, spec-driven dev, spikes, TDD — all covered in Phases 2–5 below), `routa-spec` (lightweight spec companion — covered by Phase 2 Spec + triviality gate), and `karpathy-guidelines` (surgical changes, simplicity, goal-driven execution — covered in Step 4 + "Surgical Changes"). Do not load those separately; this skill is the umbrella.
+
 ## Trigger
 
 User asks to build/create/implement something, or says "dev mode", "methodology", "sprint".

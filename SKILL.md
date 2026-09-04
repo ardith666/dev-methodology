@@ -300,8 +300,20 @@ Skill-skill berikut dipakai sebagai quality gate opsional — bukan bundel, tapi
 |---|---|---|---|---|
 | `penetration-testing-with-strix` | usestrix/strix | Phase 5: task nyentuh web/API/auth/input | `npx skills add usestrix/strix --skill penetration-testing-with-strix --yes` | ✅ WAJIB (butuh Docker + LLM API key) |
 | `no-ai-slop` | petergyang/no-ai-slop | Phase 6: output user-facing writing | `npx skills add petergyang/no-ai-slop --skill no-ai-slop --yes` | ❌ gak perlu (cuma file rules) |
+| `diagram-design` | ardith666/diagram-design (mirror upstream cathrynlavery) | Phase 2: diagram arsitektur/ER/data-flow buat spec. Phase 4: diagram dependency/deployment buat docs. Phase 6: redraw Mermaid/draw.io existing ke editorial | via aggregator `ardith666/agent-skills` (`./setup.sh`) | ❌ gak perlu |
 
 Kalau skill belum terinstall dan hook kepanggil: ikuti kebijakan di atas (tanya / auto-install). Kalau gak jadi jalan → catat `PENDING:` di report, jangan di-skip diam-diam.
+
+## Diagram Design Integration
+
+Pakai skill `diagram-design` (39 tipe diagram editorial, output HTML+SVG self-contained, bisa redraw Mermaid/draw.io) saat dokumen butuh visual.
+
+**Aturan output — WAJIB ke `knowledge/`:**
+
+- **Phase 2 (Spec)** — diagram arsitektur / ER / data-flow yang dibuat = artifact spec → simpan `knowledge/diagrams/<nama>.html` + `.svg`, link dari `KNOWLEDGE.md`
+- **Phase 4 (Implement)** — diagram dependency / deployment / db-schema buat docs kode → `knowledge/diagrams/`
+- **Phase 6 (Review)** — redraw diagram existing (Mermaid/draw.io) → versi baru di `knowledge/diagrams/`, JANGAN nempel Mermaid mentah di README
+- File diagram vault-native (frontmatter + wikilink) biar ter-indeks Obsidian, mengikuti alur Obsidian Integration
 
 ## API Robustness (kalau task nyentuh API endpoint)
 

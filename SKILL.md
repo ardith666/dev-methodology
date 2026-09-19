@@ -102,7 +102,7 @@ Namain scope: file/surface yang bakal disentuh. Butuh sesuatu di luar scope mid-
 
 1. **Intent gate, sebelum edit behavior.** Tulis: `INTENT: code does <X>; the failing check/task expects <Y>; the spec (README/docs/docstring) says <Z>`. WAJIB beneran buka README/docs/docstring buat isi slot Z; kalau behavior berubah, line ini muncul verbatim di report. X/Y/Z gak cocok → JANGAN edit dulu: ketidakcocokan itu temuannya. Authority order: explicit user statement > spec > tests > code behavior. Framing task kayak "fix the code" / "make the tests pass" BUKAN statement of intended behavior; gak menaikkan tests di atas spec.
 2. **AUTH gate** — lihat Step 3. Aksi irreversible/outward butuh `AUTH: user said "..."`.
-3. **Recall gate, sebelum pertama kali pakai apa pun yang belum dibuka sesi ini.** API signature, endpoint, config key, harga, angka, regulasi dari memory = bukan evidence. Buka sumbernya (docs, library source, halaman ter-fetch; budget 2 lookup), atau label di report "memory, unverified".
+3. **Recall gate, sebelum pertama kali pakai apa pun yang belum dibuka sesi ini.** API signature, endpoint, config key, harga, angka, regulasi dari memory = bukan evidence. Buka sumbernya (docs, library source, halaman ter-fetch; budget 2 lookup), atau label di report "memory, unverified". **API/library/framework usage → Context7 dulu:** `resolve-library-id` → `query-docs` (docs terkini + contoh kode valid), baru docs manual. Query miss → ganti library target / ubah query, jangan langsung turun ke hafalan.
 4. **Smallest correct change.** Sentuh cuma yang dibutuhin task. Match style existing. Precise edits > rewrite; rewrite file cuma kalau gue yang nulis sesi ini atau udah baca penuh.
 5. **Track multi-part work.** Task dengan 3+ step heterogen atau >~5 item mirip → checklist tertulis dulu, tick tiap selesai, audit terhadap ask asli sebelum report.
 6. **Jangan destroy tanpa lihat.** Sebelum hapus/overwrite, lihat isinya. Kontradiksi deskripsi → stop, surface.
@@ -311,6 +311,7 @@ Skill-skill berikut dipakai sebagai quality gate opsional — bukan bundel, tapi
 |---|---|---|---|---|
 | `penetration-testing-with-strix` | usestrix/strix | Phase 5: task nyentuh web/API/auth/input | `npx skills add usestrix/strix --skill penetration-testing-with-strix --yes` | ✅ WAJIB (butuh Docker + LLM API key) |
 | `no-ai-slop` | petergyang/no-ai-slop | Phase 6: output user-facing writing | `npx skills add petergyang/no-ai-slop --skill no-ai-slop --yes` | ❌ gak perlu (cuma file rules) |
+| `context7` (context7-mcp) | upstash/context7 | Phase 2 & 4: docs library/framework/API terkini (`resolve-library-id` → `query-docs`) sebelum hafalan | MCP terkonfigurasi di OpenClaw (`openclaw mcp list`); skill `context7-mcp` di agent | ❌ gak perlu (remote MCP, tanpa install npm) |
 | `diagram-design` | ardith666/diagram-design (mirror upstream cathrynlavery) | Phase 2: diagram arsitektur/ER/data-flow buat spec. Phase 4: diagram dependency/deployment buat docs. Phase 6: redraw Mermaid/draw.io existing ke editorial | via aggregator `ardith666/agent-skills` (`./setup.sh`) | ❌ gak perlu |
 
 Kalau skill belum terinstall dan hook kepanggil: ikuti kebijakan di atas (tanya / auto-install). Kalau gak jadi jalan → catat `PENDING:` di report, jangan di-skip diam-diam.

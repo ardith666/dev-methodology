@@ -243,6 +243,7 @@ Gaya komunikasi ADHD-friendly — action first, tanpa basa-basi:
 ### Phase 2: Spec
 - **Evidence rules** (Step 2): orient dulu, primary sources > memory, parallelize, time-box 2 round
 - **Intent sebelum behavior:** kalau ada test gagal, cek statement intent dulu — test bisa yang salah, bukan cuma kode
+- **Recon security (task nyentuh web/API/auth/input):** jalankan `security-meth` Phase 1 recon (architecture.md + trust boundaries + coverage ledger) sebagai bagian evidence — atau catat `PENDING: security recon` kalau di-skip. Ini nentuin done criteria Phase 1 + arah hunting Phase 5.
 - Write minimal spec using template below
 - Show in digestible chunks (not walls of text)
 - Get explicit approval before proceeding

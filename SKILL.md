@@ -77,7 +77,7 @@ Scope ambigu: kalau cuma user yang bisa mutusin → tanya SATU pertanyaan pointe
 
 Satu-dua kalimat ke user: done itu seperti apa dan gimana diverifikasi. Task: observasi konkret ("test ini pass", "build tetap hijau", "angka ini berubah", "halaman ini render"). Question/assessment: tiap klaim bisa di-trace ke file+baris atau command output. Plan-first: plan yang bisa di-approve, verifikasi per step.
 
-State load-bearing assumptions. Kalau setelah baca ulang request masih gak bisa nyebut verifikasi → tanya user satu pertanyaan spesifik, jangan lanjut.
+State load-bearing assumptions. Kalau setelah baca ulang request masih gak bisa nyebut verifikasi → tanya user satu pertanyaan spesifik, jangan lanjut. Task yang nyentuh web/API/auth/input: masukkan `security-meth` audit clean ke definisi done (atau catat `PENDING: security audit` kalau belum dijalankan) — hook di Phase 5.
 
 ### Step 2 — Gather evidence
 
@@ -276,11 +276,11 @@ Gaya komunikasi ADHD-friendly — action first, tanpa basa-basi:
 - **Verify by observation** — jalankan/dilihat, bukan disimpulkan dari baca kode
 - Run all tests; manual smoke test if applicable
 - **Twin check** kalau fix defect — search pattern yang sama di seluruh project
-- **Security scan (opsional — WAJIB tanya user dulu):** kalau task nyentuh web/API/auth/input handling, tawarkan pentest:
-  1. Info user: skill `penetration-testing-with-strix` butuh install (`npx skills add usestrix/strix --skill penetration-testing-with-strix --yes`) + Docker jalan + LLM API key
-  2. Kasih 2 pilihan: **[1] setup sekarang** / **[2] skip**
-  3. Setup → install + jalankan; findings → `fix-security-vulnerabilities-with-strix`. Skip → lanjut, catat `PENDING: security scan di-skip - user pilih skip`
-  4. Kalau setup gagal (Docker/key gak ada) → jangan maksa, jangan pura-pura scan: `PENDING: security scan gagal setup - <alasan>`
+- **Security scan (opsional — WAJIB tanya user dulu):** kalau task nyentuh web/API/auth/input handling, tawarkan audit. Dua jalur komplementer:
+  1. **[1] security-meth** (audit source-first) — recon → coverage hunting → validasi adversarial → `findings.json` + `REPORT.md` (divalidasi `report-schema.json`, validator Node zero-dep). Syarat: Node.js + sandbox OS-enforced (tanpa sandbox, temuan cuma `needs_validation`, gak bisa confirm). Hasil → `knowledge/security-audit/`
+  2. **[2] strix** (pentest aktif) — `npx skills add usestrix/strix --skill penetration-testing-with-strix --yes`, butuh Docker jalan + LLM API key. Findings → `fix-security-vulnerabilities-with-strix`
+  3. **[3] skip** — lanjut, catat `PENDING: security scan di-skip - user pilih skip`
+  Setup gagal (Docker/key/sandbox gak ada) → jangan maksa, jangan pura-pura scan: `PENDING: security scan gagal setup - <alasan>`
 - **Hard bound:** 3 siklus fix-verify gagal → stop, hand back ke user
 - Report pass/fail per task
 - Verify against spec requirements
@@ -312,7 +312,8 @@ Skill-skill berikut dipakai sebagai quality gate opsional — bukan bundel, tapi
 | `penetration-testing-with-strix` | usestrix/strix | Phase 5: task nyentuh web/API/auth/input | `npx skills add usestrix/strix --skill penetration-testing-with-strix --yes` | ✅ WAJIB (butuh Docker + LLM API key) |
 | `no-ai-slop` | petergyang/no-ai-slop | Phase 6: output user-facing writing | `npx skills add petergyang/no-ai-slop --skill no-ai-slop --yes` | ❌ gak perlu (cuma file rules) |
 | `context7` (context7-mcp) | upstash/context7 | Phase 2 & 4: docs library/framework/API terkini (`resolve-library-id` → `query-docs`) sebelum hafalan | MCP terkonfigurasi di OpenClaw (`openclaw mcp list`); skill `context7-mcp` di agent | ❌ gak perlu (remote MCP, tanpa install npm) |
-| `diagram-design` | ardith666/diagram-design (mirror upstream cathrynlavery) | Phase 2: diagram arsitektur/ER/data-flow buat spec. Phase 4: diagram dependency/deployment buat docs. Phase 6: redraw Mermaid/draw.io existing ke editorial | via aggregator `ardith666/agent-skills` (`./setup.sh`) | ❌ gak perlu |
+| `diagram-design` | ardith666/diagram-design (mirror upstream cathrynlavery) | Phase 2: diagram arsitektur/ER/data-flow buat spec. Phase 4: diagram dependency/deployment buat docs. Phase 6: redraw Mermaid/draw.io existing ke editorial | via aggregator `ardith666/skills` (`./setup.sh`) | ❌ gak perlu |
+| `security-meth` | ardith666/security-meth (fork cloudflare/security-audit-skill, MIT) | Phase 2 (done criteria) & Phase 5: audit keamanan source-first 6 fase (recon → coverage hunting → validasi adversarial → findings.json + REPORT.md) | via aggregator `ardith666/skills` (`./setup.sh`) atau `git clone https://github.com/ardith666/security-meth` | ✅ WAJIB (butuh Node + sandbox OS buat konfirmasi finding) |
 
 Kalau skill belum terinstall dan hook kepanggil: ikuti kebijakan di atas (tanya / auto-install). Kalau gak jadi jalan → catat `PENDING:` di report, jangan di-skip diam-diam.
 

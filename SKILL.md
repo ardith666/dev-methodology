@@ -1,7 +1,7 @@
 ---
 name: dev-methodology
-version: 3.1.1
-description: "Structured software development workflow: ask → spec → plan → implement → test → review → knowledge, dengan Fable execution loop (classify → define done → evidence → decide → act → verify → report) + Obsidian Integration (vault-native knowledge, retain via vault). Use when building, creating, or implementing something."
+version: 3.2.0
+description: "Structured software development workflow: ask → spec → plan → implement → test → review → knowledge, dengan Fable execution loop (classify → define done → evidence → decide → act → verify → report) + Obsidian Integration (vault-native knowledge, retain via vault) + Wiki Pattern (source contract, index retrieval, lint). Use when building, creating, or implementing something."
 ---
 
 # Dev Methodology
@@ -192,6 +192,19 @@ Setiap project punya folder `knowledge/` sebagai **single source of truth**. Age
 - **Be specific** — "Used SQLite for simplicity, no server needed" not "Chose database"
 - **Read on start** — first action in any session: read `knowledge/KNOWLEDGE.md`
 
+### Wiki Pattern (source contract · index retrieval · lint)
+
+Schema knowledge lengkap: `references/wiki-pattern.md` — **WAJIB dibaca saat Phase 1** kalau project punya `knowledge/`. Empat aturan intinya:
+
+1. **Sumber immutable** — file sumber (`knowledge/research/`, RPS, data) tidak pernah diedit. Artikel yang diperbarui, bukan sumbernya.
+2. **Source contract** — tiap artikel knowledge (bukan `KNOWLEDGE.md`/`README.md`) wajib punya `**Source:** <path> · [YYYY-MM-DD] · fase: <phase>`, intro 2-4 kalimat, `## Key Takeaways`, `## Related` (wikilink). Nggak ada sumber → tulis di `## Open Questions`, jangan ditebak.
+3. **Index = lapisan retrieval** — query lewat `knowledge/README.md` → `knowledge/KNOWLEDGE.md` → artikel (1-3 file). Kalau butuh baca >4 file, index-nya yang bermasalah — perbaiki index, bukan baca semua.
+4. **`lint` = operasi resmi** — health check knowledge (kontradiksi / stale / orphan / missing cross-link / unsourced claim) → tulis report `knowledge/lint-reports/lint-YYYY-MM-DD.md`. **Tidak mengubah apa pun.** Fix masuk approval user satu per satu, tiap fix append 1 baris di `history.md`. Trigger: user bilang "lint"/"audit", atau Phase 6 sebelum handover.
+
+Riset web (Phase 2) mengikuti operasi Research di `references/wiki-pattern.md`: **satu URL = satu file** di `knowledge/research/` dengan frontmatter `url`/`fetched`/`summary` + konten penuh (bukan ringkasan). Jangan gabung 2 sumber dalam 1 file, jangan overwrite yang sudah ada.
+
+Skill lain (uiux-methodology, mk-iticm) pointer ke `references/wiki-pattern.md` — jangan salin aturan ke sana.
+
 ### ⛔ HARD RULES — output WAJIB masuk `knowledge/`
 
 Lokasi output agent **haram di luar `knowledge/`**. Berlaku untuk SEMUA artifact, dari skill apapun (dev-meth, uiux-meth, diagram-design, superpowers, dll):
@@ -361,6 +374,9 @@ Kalau task gak nyentuh API → section ini skip, gak perlu diimplement.
 - **Verify by observation:** claim harus dijalankan, bukan disimpulkan. 3 siklus gagal → stop, hand back
 - **Always read `knowledge/README.md` first in any new session** — entry point
 - **If `knowledge/README.md` doesn't exist, create it based on templates**
+- **Source contract** — artikel knowledge wajib `**Source:**` + `## Key Takeaways` + `## Related` (`references/wiki-pattern.md`)
+- **Query lewat index** — `README` → `KNOWLEDGE` → artikel. Jangan grep/glob semua file `knowledge/`
+- **Lint = report dulu** — health check tidak boleh mengubah file; tunggu approval per temuan
 - **Always update `knowledge/` files at every phase gate**
 - **⛔ HARD RULE:** semua artifact/output agent WAJIB masuk `knowledge/` — DILARANG bikin folder/file non-standar di luar `knowledge/` (lihat § Knowledge Capture → HARD RULES)
 

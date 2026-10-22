@@ -363,6 +363,7 @@ Skill-skill berikut dipakai sebagai quality gate opsional — bukan bundel, tapi
 | `no-ai-slop` | petergyang/no-ai-slop | Phase 6: output user-facing writing | `npx skills add petergyang/no-ai-slop --skill no-ai-slop --yes` | ❌ gak perlu (cuma file rules) |
 | `context7` (context7-mcp) | upstash/context7 | Phase 2 & 4: docs library/framework/API terkini (`resolve-library-id` → `query-docs`) sebelum hafalan | MCP terkonfigurasi di OpenClaw (`openclaw mcp list`); skill `context7-mcp` di agent | ❌ gak perlu (remote MCP, tanpa install npm) |
 | `diagram-design` | ardith666/diagram-design (mirror upstream cathrynlavery) | Phase 2: diagram arsitektur/ER/data-flow buat spec. Phase 4: diagram dependency/deployment buat docs. Phase 6: redraw Mermaid/draw.io existing ke editorial | via aggregator `ardith666/skills` (`./setup.sh`) | ❌ gak perlu |
+| `codebase-memory-mcp` | DeusData/codebase-memory-mcp (C11 native MCP) | Phase 1 (orient), Phase 2 (trace), Phase 4 (snippet), Phase 5 (blast radius test impact). Menghemat token hingga 10x | `curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh \| bash` | ✅ WAJIB (install binary lokal sistem) |
 | `security-meth` | ardith666/security-meth (fork cloudflare/security-audit-skill, MIT) | Phase 2 (done criteria) & Phase 5: audit keamanan source-first 6 fase (recon → coverage hunting → validasi adversarial → findings.json + REPORT.md) | via aggregator `ardith666/skills` (`./setup.sh`) atau `git clone https://github.com/ardith666/security-meth` | ✅ WAJIB (butuh Node + sandbox OS buat konfirmasi finding) |
 
 Kalau skill belum terinstall dan hook kepanggil: ikuti kebijakan di atas (tanya / auto-install). Kalau gak jadi jalan → catat `PENDING:` di report, jangan di-skip diam-diam.
@@ -551,6 +552,24 @@ Alasan: `.graphify_python`/`.graphify_root` berisi path absolut interpreter & ro
 ### Dependency & Self-Healing
 
 Cek-req → **tanya user → bantu deploy → verify.** Perlu `uv tool install graphifyy` (CLI `graphify`, PATH `~/.local/bin`) + `graphify install --platform agents` (skill global) — aksi install butuh AUTH. **Prompt ke user ada di `references/graphify/README.md`** (cek-req, prompt AUTH, deploy & verify) — ikuti itu saat mesin belum punya graphify. Gagal → grep/manual file ops seperti biasa, dicatat `PENDING:` di `knowledge/`.
+
+## Codebase Memory MCP Integration (token-efficient discovery)
+
+Modul aktif saat `codebase-memory-mcp` (CBM) terpasang atau MCP tools-nya (`search_graph`, `trace_path`, `get_code_snippet`, `detect_changes`) terdaftar. Referensi: `references/codebase-memory/README.md`.
+
+### Prinsip
+1. **Token efficiency (10×)** — gunakan graph query dan `get_code_snippet` alih-alih membaca seluruh file (`read`/`cat`).
+2. **Prioritas pencarian**:
+   `search_graph` → `trace_path` → `get_code_snippet` → `detect_changes` → baru fallback ke grep/glob untuk string literal/config.
+3. **Komplementer dengan Graphify**:
+   - CBM: live MCP tools, type resolution via Hybrid LSP, surgical code snippets, blast radius git diff.
+   - Graphify: visualisasi komunitas/arsitektur (HTML), wiki generator, `GRAPH_REPORT.md` ke `knowledge/`.
+
+### Hook per phase
+- **Phase 1** — `get_architecture` / `list_projects` untuk memahami struktur modul & endpoint tanpa dump file.
+- **Phase 2** — `trace_path` (`calls`, `data_flow`, `cross_service`) untuk bukti relasi antar komponen saat menyusun spec.
+- **Phase 4** — `get_code_snippet` untuk membaca fungsi target secara bedah (surgical reading); hindari `read` 1 file penuh jika hanya butuh 1 fungsi.
+- **Phase 5** — `detect_changes` (`scope: "symbols"`, `scope: "tests"`) untuk memetakan blast radius diff dan memilih test spesifik yang wajib lolos.
 
 ## Knowledge Tracking
 
